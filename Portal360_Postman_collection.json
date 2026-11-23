@@ -1,0 +1,156 @@
+{
+  "info": {
+    "name": "Portal360 API - pruebas",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4000/api"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Salud",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"API saludable\", () => pm.response.to.have.status(200));",
+              "pm.test(\"Neon activo\", () => pm.expect(pm.response.json().ok).to.eql(true));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Registro",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/auth/registro",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "registro"
+          ]
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\": \"Usuario de prueba\", \"correo\": \"prueba@example.com\", \"contrasena\": \"cambiar-esta-clave-segura\"}"
+        }
+      }
+    },
+    {
+      "name": "Inicio de sesion",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"correo\": \"prueba@example.com\", \"contrasena\": \"cambiar-esta-clave-segura\"}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 200) pm.collectionVariables.set(\"token\", pm.response.json().token);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Listar SAT",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/registros?modulo=sat",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "registros"
+          ]
+        },
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Nuevo registro SAT",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/registros",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "registros"
+          ]
+        },
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"modulo\": \"sat\", \"titulo\": \"Consulta general\", \"detalle\": \"Registro académico de demostración\"}"
+        }
+      }
+    }
+  ]
+}
