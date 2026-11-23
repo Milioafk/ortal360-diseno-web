@@ -4,8 +4,6 @@ import helmet from 'helmet';
 import { rateLimit } from 'express-rate-limit';
 import { neon } from '@neondatabase/serverless';
 import { randomBytes, scryptSync, timingSafeEqual, createHmac } from 'node:crypto';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 if (!process.env.DATABASE_URL || !process.env.TOKEN_SECRET || process.env.TOKEN_SECRET.length < 32) {
   throw new Error('Configure DATABASE_URL y TOKEN_SECRET (32 caracteres mínimo) en backend/.env');
@@ -31,8 +29,6 @@ app.use('/api',(req,res,next)=>{
 
 app.use('/api',rateLimit({windowMs:15*60*1000,limit:120,standardHeaders:'draft-7',legacyHeaders:false}));
 const modules=new Set(['sat','metrobus','crm','agua']);
-const publicDir=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../public');
-app.use(express.static(publicDir));
 const hashPassword=(pwd,salt=randomBytes(16).toString('hex'))=>`${salt}:${scryptSync(pwd,salt,64).toString('hex')}`;
 function passwordMatches(pwd,stored){
   const [salt,hash]=String(stored).split(':');
@@ -100,5 +96,6 @@ app.patch('/api/registros/:id',auth,wrap(async(req,res)=>{
  const [row]=await sql`UPDATE portal_registros SET estado=${estado},actualizado_en=NOW() WHERE id=${id} RETURNING id,estado`;
  if(!row)return res.status(404).json({error:'Registro no encontrado'});res.json(row);
 }));
-app.get('*',(req,res)=>res.sendFile(path.join(publicDir,'index.html')));
+app.get('/',(req,res)=>res.json({servicio:'Portal360 API',estado:'online',salud:'/api/health',frontend:'https://portal360-web.vercel.app'}));
+app.use((req,res)=>res.status(404).json({error:'Ruta no encontrada'}));
 app.listen(process.env.PORT||4000,()=>console.log(`Portal disponible en http://localhost:${process.env.PORT||4000}`));
