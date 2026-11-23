@@ -26,11 +26,23 @@ $('entryForm').addEventListener('submit',async e=>{
  e.preventDefault();if(!session){notify('Primero inicia sesión');$('acceso').scrollIntoView();return}
  try{await request('/registros',{method:'POST',body:JSON.stringify({modulo:selected,titulo:$('titulo').value,detalle:$('detalle').value})});e.target.reset();notify('Registro guardado en la base compartida');await loadRecords()}catch(err){notify(err.message)}
 });
+// La vista general permite consultar registros tanto del portal inicial como de los 4 sitios originales.
+const selector=document.createElement('select');selector.className='form-select mb-3';selector.setAttribute('aria-label','Seleccionar sistema para consultar');
+for(const [key,value] of Object.entries(modules))selector.add(new Option(value,key));
+$('selectedModuleLabel').after(selector);
+selector.addEventListener('change',()=>{selected=selector.value;$('selectedModuleLabel').textContent='Módulo seleccionado: '+modules[selected];loadRecords()});
 $('refreshBtn').addEventListener('click',loadRecords);
 async function loadRecords(){
  const box=$('records');box.replaceChildren();if(!session){const p=document.createElement('p');p.textContent='Inicia sesión para consultar el historial.';box.append(p);return}
  try{
- const rows=await request(`/registros?modulo=${encodeURIComponent(selected)}`);if(!rows.length){const p=document.createElement('p');p.textContent='Aún no hay registros en este módulo.';box.append(p);return}
+ const [rows,original]=await Promise.all([request(`/registros?modulo=${encodeURIComponent(selected)}`),request(`/modulos/${selected}/items`)]);if(!rows.length&&!original.length){const p=document.createElement('p');p.textContent='Aún no hay registros en este módulo.';box.append(p);return}
+ original.forEach(r=>{
+ const article=document.createElement('article');article.className='record';
+ const h=document.createElement('h4');h.textContent='Registro original · '+r.codigo;
+ const pre=document.createElement('pre');pre.className='small mb-2';pre.style.whiteSpace='pre-wrap';pre.textContent=Object.entries(r.datos||{}).map(([k,v])=>k.replaceAll('_',' ')+': '+v).join('\n');
+ const note=document.createElement('small');note.textContent=`${r.estado} · ${new Date(r.creado_en).toLocaleString('es-PE')}`;
+ article.append(h,pre,note);box.append(article);
+ });
  rows.forEach(r=>{
  const article=document.createElement('article');article.className='record';const head=document.createElement('div');head.className='record-head';const title=document.createElement('h4');title.textContent=r.titulo;const status=document.createElement('span');status.className='badge text-bg-primary';status.textContent=r.estado;head.append(title,status);
  const detail=document.createElement('p');detail.textContent=r.detalle;const info=document.createElement('small');info.textContent=`#${r.id} · ${new Date(r.creado_en).toLocaleString('es-PE')} ${r.autor?'· '+r.autor:''}`;article.append(head,detail,info);

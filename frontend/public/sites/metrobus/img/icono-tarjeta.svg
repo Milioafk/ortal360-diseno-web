@@ -1,0 +1,7 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Icono de tarjeta recargable MetroBus">
+  <circle cx="60" cy="60" r="55" fill="#FFF3E4"/>
+  <rect x="24" y="36" width="72" height="48" rx="7" fill="#101B2E"/>
+  <rect x="24" y="48" width="72" height="9" fill="#E85D25"/>
+  <rect x="33" y="64" width="26" height="8" rx="2" fill="#FFC94A"/>
+  <circle cx="80" cy="70" r="7" fill="#7A5FB0"/>
+</svg>

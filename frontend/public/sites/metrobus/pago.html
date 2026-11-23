@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Paga tu recarga MetroBus Lima con tarjeta o billetera electrónica">
+  <title>MetroBus Lima - Pago en línea</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pago.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="marca" href="index.html">
+        <span class="marca-punto" aria-hidden="true"></span>
+        <span class="marca-texto">Metro<em>Bus</em> Lima</span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="rutas.html">Rutas</a></li>
+          <li><a href="como-funciona.html">Cómo funciona</a></li>
+          <li><a href="registro.html">Recargar tarjeta</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li id="nav-sesion"><a href="login.html">Iniciar sesión</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="pago">
+      <h2>Pago en línea</h2>
+      <p class="aviso-simulacion">Simulación académica: usa solo los datos de prueba de este curso. Nunca escribas los datos de tu tarjeta real.</p>
+
+      <div class="pago-contenedor" id="pago-contenedor">
+        <div class="pago-resumen" aria-labelledby="t-resumen">
+          <h3 id="t-resumen">Resumen</h3>
+          <label for="registro">Recarga a pagar:</label>
+          <select id="registro" name="registro"></select>
+          <p class="pago-total">Total a pagar: <strong id="resumen-monto">—</strong></p>
+          <p class="ayuda-campo">¿Prefieres pagar en persona? Acércate a la ventanilla de caja con tu código de recarga o tu DNI.</p>
+        </div>
+
+        <div class="pago-metodos" id="pago-metodos">
+          <fieldset class="selector-metodo">
+            <legend>Método de pago</legend>
+            <div class="selector-opciones">
+              <label class="opcion-metodo"><input type="radio" name="metodo" value="tarjeta" checked> <span>💳 Tarjeta de débito o crédito</span></label>
+              <label class="opcion-metodo"><input type="radio" name="metodo" value="billetera"> <span>📱 Billetera electrónica</span></label>
+            </div>
+          </fieldset>
+
+          <form id="form-tarjeta" class="form-pago" novalidate>
+            <fieldset>
+              <legend>Pagar con tarjeta</legend>
+
+              <label for="numero">Número de tarjeta:</label>
+              <input type="text" id="numero" name="numero" inputmode="numeric" autocomplete="cc-number" maxlength="23" placeholder="0000 0000 0000 0000" required aria-describedby="marca-detectada error-numero">
+              <span id="marca-detectada" class="marca-detectada"></span>
+              <span id="error-numero" class="error-campo" role="alert"></span>
+
+              <div class="fila-doble">
+                <div>
+                  <label for="vencimiento">Vencimiento (MM/AA):</label>
+                  <input type="text" id="vencimiento" name="vencimiento" inputmode="numeric" autocomplete="cc-exp" maxlength="5" placeholder="MM/AA" required aria-describedby="error-vencimiento">
+                  <span id="error-vencimiento" class="error-campo" role="alert"></span>
+                </div>
+                <div>
+                  <label for="cvv">CVV:</label>
+                  <input type="password" id="cvv" name="cvv" inputmode="numeric" autocomplete="cc-csc" maxlength="4" required aria-describedby="error-cvv">
+                  <span id="error-cvv" class="error-campo" role="alert"></span>
+                </div>
+              </div>
+
+              <label for="titular">Nombre del titular:</label>
+              <input type="text" id="titular" name="titular" autocomplete="cc-name" required aria-describedby="error-titular">
+              <span id="error-titular" class="error-campo" role="alert"></span>
+
+              <button type="submit" class="btn-pagar">Pagar con tarjeta</button>
+            </fieldset>
+          </form>
+
+          <form id="form-billetera" class="form-pago" novalidate hidden>
+            <fieldset>
+              <legend>Pagar con billetera</legend>
+
+              <label for="proveedor">Billetera:</label>
+              <select id="proveedor" name="proveedor">
+                <option value="andipay">AndiPay</option>
+                <option value="pagomovil">PagoMóvil</option>
+              </select>
+
+              <label for="celular">Celular afiliado:</label>
+              <input type="text" id="celular" name="celular" inputmode="numeric" autocomplete="tel-national" maxlength="9" placeholder="9 dígitos" required aria-describedby="error-celular">
+              <span id="error-celular" class="error-campo" role="alert"></span>
+
+              <label for="codigo">Código de aprobación (6 dígitos que muestra tu billetera):</label>
+              <input type="text" id="codigo" name="codigo" inputmode="numeric" autocomplete="one-time-code" maxlength="6" required aria-describedby="error-codigo">
+              <span id="error-codigo" class="error-campo" role="alert"></span>
+
+              <button type="submit" class="btn-pagar">Pagar con billetera</button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+
+      <div id="mensaje-pago" class="confirmacion-recarga" role="status" aria-live="polite"></div>
+
+      <details class="datos-prueba">
+        <summary>Datos de prueba para la práctica</summary>
+        <div class="tabla-contenedor">
+          <table class="tabla-datos">
+            <caption>Tarjetas y billeteras ficticias de la entidad emisora simulada</caption>
+            <thead>
+              <tr><th scope="col">Medio</th><th scope="col">Datos</th><th scope="col">Resultado esperado</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Visa débito</td><td>4111 1111 1111 1111 · 12/29 · CVV 123</td><td>Aprobado</td></tr>
+              <tr><td>Visa débito</td><td>4000 0000 0000 0002 · 08/28 · CVV 456</td><td>Rechazado por saldo (S/ 10.00)</td></tr>
+              <tr><td>Mastercard crédito</td><td>5555 5555 5555 4444 · 05/30 · CVV 789</td><td>Aprobado</td></tr>
+              <tr><td>Mastercard crédito</td><td>5105 1051 0510 5100 · 03/27 · CVV 321</td><td>Rechazado: tarjeta bloqueada</td></tr>
+              <tr><td>American Express</td><td>3782 8224 6310 005 · 11/28 · CVV 1234</td><td>Aprobado (CVV de 4 dígitos)</td></tr>
+              <tr><td>AndiPay</td><td>987654321 · código 123456</td><td>Aprobado</td></tr>
+              <tr><td>PagoMóvil</td><td>912345678 · código 654321</td><td>Rechazado por saldo (S/ 15.00)</td></tr>
+              <tr><td>AndiPay</td><td>999888777 · código 000000</td><td>Rechazado: código incorrecto</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <p class="enlace-secundario"><a href="consulta.html">Volver a mis recargas</a></p>
+    </section>
+  </main>
+
+  <footer class="pie-mapa">
+    <div class="pie-columnas">
+      <div class="pie-col">
+        <p class="pie-marca">Metro<span>Bus</span> Lima</p>
+        <p>Transporte urbano masivo para Lima: puntual, seguro y siempre a tiempo para tu día.</p>
+      </div>
+      <div class="pie-col">
+        <h4>Mapa del sitio</h4>
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="rutas.html">Rutas</a>
+        <a href="como-funciona.html">Cómo funciona</a>
+        <a href="registro.html">Recargar tarjeta</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div class="pie-col">
+        <h4>Líneas</h4>
+        <a href="rutas.html">Línea A · Naranja</a>
+        <a href="rutas.html">Línea B · Verde</a>
+        <a href="rutas.html">Línea C · Alimentadora</a>
+      </div>
+      <div class="pie-col">
+        <h4>Atención al cliente</h4>
+        <p>Lima, Perú</p>
+        <p>Proyecto educativo del curso de Diseño Web</p>
+      </div>
+    </div>
+    <p class="pie-copy">MetroBus Lima &copy; 2026 — Proyecto educativo del curso de Diseño Web.</p>
+  </footer>
+
+  <script type="module" src="js/auth/sesion-menu.js"></script>
+  <script type="module" src="js/pago/pago.js"></script>
+
+</body>
+</html>

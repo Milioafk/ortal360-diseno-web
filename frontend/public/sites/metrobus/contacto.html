@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Formulario de solicitud y contacto de MetroBus Lima">
+  <title>MetroBus Lima - Contacto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/contacto.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="marca" href="index.html">
+        <span class="marca-punto" aria-hidden="true"></span>
+        <span class="marca-texto">Metro<em>Bus</em> Lima</span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="rutas.html">Rutas</a></li>
+          <li><a href="como-funciona.html">Cómo funciona</a></li>
+          <li><a href="registro.html">Recargar tarjeta</a></li>
+          <li><a href="contacto.html" aria-current="page">Contacto</a></li>
+          <li id="nav-sesion"><a href="login.html">Iniciar sesión</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="contacto">
+      <h2>Formulario de solicitud / reclamo</h2>
+      <form class="form-reclamo" id="form-reclamo">
+        <fieldset>
+          <legend>Datos de tu solicitud</legend>
+
+          <div class="fila-doble">
+            <div>
+              <label for="nombre">Nombre completo:</label>
+              <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div>
+              <label for="dni">DNI:</label>
+              <input type="text" id="dni" name="dni" pattern="[0-9]{8}" maxlength="8" required>
+            </div>
+          </div>
+
+          <div class="fila-doble">
+            <div>
+              <label for="correo">Correo:</label>
+              <input type="email" id="correo" name="correo" required>
+            </div>
+            <div>
+              <label for="categoria">Es una:</label>
+              <select id="categoria" name="categoria" required>
+                <option value="consulta">Consulta</option>
+                <option value="reclamo">Reclamo</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="fila-doble">
+            <div>
+              <label for="tipo">Tipo de solicitud:</label>
+              <select id="tipo" name="tipo" required>
+                <option value="">Selecciona una opción</option>
+                <option value="tarjeta">Problema con la tarjeta</option>
+                <option value="ruta">Reclamo por ruta o frecuencia</option>
+                <option value="estacion">Reporte de estación o paradero</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+          </div>
+
+          <label for="mensaje">Describe tu solicitud:</label>
+          <textarea id="mensaje" name="mensaje" rows="4" maxlength="500" required></textarea>
+
+          <input type="submit" value="Enviar solicitud">
+        </fieldset>
+      </form>
+      <div id="confirmacion-contacto" class="confirmacion-recarga" role="status"></div>
+
+      <p class="datos-contacto">
+        Oficina principal: Av. Naranjal 1234, Independencia, Lima <br>
+        Central telefónica: (+51) 977562931 · Correo: contacto@metrobuslima.pe <br>
+        Horario de atención: lunes a sábado, 05:00 a 23:00
+      </p>
+    </section>
+  </main>
+
+  <footer class="pie-mapa">
+    <div class="pie-columnas">
+      <div class="pie-col">
+        <p class="pie-marca">Metro<span>Bus</span> Lima</p>
+        <p>Transporte urbano masivo para Lima: puntual, seguro y siempre a tiempo para tu día.</p>
+      </div>
+      <div class="pie-col">
+        <h4>Mapa del sitio</h4>
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="rutas.html">Rutas</a>
+        <a href="como-funciona.html">Cómo funciona</a>
+        <a href="registro.html">Recargar tarjeta</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div class="pie-col">
+        <h4>Líneas</h4>
+        <a href="rutas.html">Línea A · Naranja</a>
+        <a href="rutas.html">Línea B · Verde</a>
+        <a href="rutas.html">Línea C · Alimentadora</a>
+      </div>
+      <div class="pie-col">
+        <h4>Atención al cliente</h4>
+        <p>Lima, Perú</p>
+        <p>Proyecto educativo del curso de Diseño Web</p>
+      </div>
+    </div>
+    <p class="pie-copy">MetroBus Lima &copy; 2026 — Proyecto educativo del curso de Diseño Web.</p>
+  </footer>
+
+  <script type="module" src="js/auth/sesion-menu.js"></script>
+  <script type="module" src="js/contacto/contacto.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Consulta tus recargas de tarjeta MetroBus Lima">
+  <title>MetroBus Lima - Mis recargas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/consulta.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="marca" href="index.html">
+        <span class="marca-punto" aria-hidden="true"></span>
+        <span class="marca-texto">Metro<em>Bus</em> Lima</span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="rutas.html">Rutas</a></li>
+          <li><a href="como-funciona.html">Cómo funciona</a></li>
+          <li><a href="registro.html">Recargar tarjeta</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li id="nav-sesion"><a href="login.html">Iniciar sesión</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="consulta">
+      <h2>Mis recargas</h2>
+
+      <div id="consulta-bloqueada" class="aviso-sesion" hidden>
+        <p>Para consultar tus recargas primero debes iniciar sesión.</p>
+        <a href="login.html" class="btn btn-primario">Iniciar sesión</a>
+      </div>
+
+      <div id="consulta-contenedor" hidden>
+        <div class="tabla-contenedor">
+          <table class="tabla-datos" id="tabla-historial-recargas">
+            <thead>
+              <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Tarjeta</th>
+                <th scope="col">Recarga</th>
+                <th scope="col">Total a pagar</th>
+                <th scope="col">Saldo</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Pago</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Acción</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpo-tabla-recargas"></tbody>
+          </table>
+          <p id="sin-recargas" class="sin-registros" hidden>Todavía no registras ninguna recarga.</p>
+        </div>
+        <p class="enlace-secundario"><a href="registro.html">Hacer una nueva recarga</a></p>
+      </div>
+
+      <div id="mensaje-consulta" class="confirmacion-recarga" role="status"></div>
+    </section>
+  </main>
+
+  <footer class="pie-mapa">
+    <div class="pie-columnas">
+      <div class="pie-col">
+        <p class="pie-marca">Metro<span>Bus</span> Lima</p>
+        <p>Transporte urbano masivo para Lima: puntual, seguro y siempre a tiempo para tu día.</p>
+      </div>
+      <div class="pie-col">
+        <h4>Mapa del sitio</h4>
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="rutas.html">Rutas</a>
+        <a href="como-funciona.html">Cómo funciona</a>
+        <a href="registro.html">Recargar tarjeta</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div class="pie-col">
+        <h4>Líneas</h4>
+        <a href="rutas.html">Línea A · Naranja</a>
+        <a href="rutas.html">Línea B · Verde</a>
+        <a href="rutas.html">Línea C · Alimentadora</a>
+      </div>
+      <div class="pie-col">
+        <h4>Atención al cliente</h4>
+        <p>Lima, Perú</p>
+        <p>Proyecto educativo del curso de Diseño Web</p>
+      </div>
+    </div>
+    <p class="pie-copy">MetroBus Lima &copy; 2026 — Proyecto educativo del curso de Diseño Web.</p>
+  </footer>
+
+  <script type="module" src="js/auth/sesion-menu.js"></script>
+  <script type="module" src="js/consulta/consulta.js"></script>
+
+</body>
+</html>

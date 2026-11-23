@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Recarga tu tarjeta MetroBus Lima">
+  <title>MetroBus Lima - Recarga de tarjeta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/registro.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="marca" href="index.html">
+        <span class="marca-punto" aria-hidden="true"></span>
+        <span class="marca-texto">Metro<em>Bus</em> Lima</span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="rutas.html">Rutas</a></li>
+          <li><a href="como-funciona.html">Cómo funciona</a></li>
+          <li><a href="registro.html" aria-current="page">Recargar tarjeta</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li id="nav-sesion"><a href="login.html">Iniciar sesión</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="recarga">
+      <h2>Recarga de tarjeta</h2>
+      <div class="recarga-contenedor" id="recarga-contenedor-sesion" hidden>
+        <div class="recarga-icono-panel">
+          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Icono animado de tarjeta MetroBus" class="icono-tarjeta-animada">
+            <rect x="24" y="36" width="72" height="48" rx="7" fill="#ffffff"/>
+            <rect x="24" y="48" width="72" height="9" fill="#E85D25"/>
+            <rect x="33" y="64" width="26" height="8" rx="2" fill="#FFC94A"/>
+            <circle cx="80" cy="70" r="7" fill="#7A5FB0"/>
+          </svg>
+        </div>
+
+        <form id="form-recarga">
+          <fieldset>
+            <legend>Datos de recarga</legend>
+
+            <label for="numero-tarjeta">Número de tarjeta:</label>
+            <input type="text" id="numero-tarjeta" name="numero_tarjeta" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" placeholder="10 dígitos" required>
+
+            <label for="monto">Monto a recargar (S/):</label>
+            <input type="number" id="monto" name="monto_recarga" min="2" step="0.5" required>
+
+            <div class="opcion-check">
+              <input type="checkbox" id="tarjeta-nueva" name="tarjeta_nueva">
+              <label for="tarjeta-nueva">Necesito una tarjeta nueva (S/ 4.50)</label>
+            </div>
+            <div class="opcion-check">
+              <input type="checkbox" id="pase-universitario" name="pase_universitario" disabled>
+              <label for="pase-universitario">Tengo pase universitario (la tarjeta cuesta S/ 2.25)</label>
+            </div>
+
+            <div class="cotizacion" aria-live="polite">
+              <p class="cotizacion-linea"><span>Recarga</span> <output id="desglose-recarga" for="monto">S/ 0.00</output></p>
+              <p class="cotizacion-linea"><span>Tarjeta nueva</span> <output id="desglose-tarjeta" for="tarjeta-nueva pase-universitario">S/ 0.00</output></p>
+              <p class="cotizacion-total"><span>Total a pagar</span> <output id="monto-estimado" for="monto tarjeta-nueva pase-universitario">S/ 0.00</output></p>
+            </div>
+
+            <input type="submit" class="btn-recarga" value="Continuar al pago">
+          </fieldset>
+        </form>
+      </div>
+
+      <div id="recarga-bloqueada" class="aviso-sesion" hidden>
+        <p>Para recargar tu tarjeta primero debes crear una cuenta o iniciar sesión.</p>
+        <a href="login.html" class="btn btn-primario">Iniciar sesión</a>
+      </div>
+
+      <div id="confirmacion-recarga" class="confirmacion-recarga" role="status"></div>
+      <p class="enlace-secundario"><a href="consulta.html">Ver mis recargas</a></p>
+    </section>
+  </main>
+
+  <footer class="pie-mapa">
+    <div class="pie-columnas">
+      <div class="pie-col">
+        <p class="pie-marca">Metro<span>Bus</span> Lima</p>
+        <p>Transporte urbano masivo para Lima: puntual, seguro y siempre a tiempo para tu día.</p>
+      </div>
+      <div class="pie-col">
+        <h4>Mapa del sitio</h4>
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="rutas.html">Rutas</a>
+        <a href="como-funciona.html">Cómo funciona</a>
+        <a href="registro.html">Recargar tarjeta</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div class="pie-col">
+        <h4>Líneas</h4>
+        <a href="rutas.html">Línea A · Naranja</a>
+        <a href="rutas.html">Línea B · Verde</a>
+        <a href="rutas.html">Línea C · Alimentadora</a>
+      </div>
+      <div class="pie-col">
+        <h4>Atención al cliente</h4>
+        <p>Lima, Perú</p>
+        <p>Proyecto educativo del curso de Diseño Web</p>
+      </div>
+    </div>
+    <p class="pie-copy">MetroBus Lima &copy; 2026 — Proyecto educativo del curso de Diseño Web.</p>
+  </footer>
+
+  <script type="module" src="js/auth/sesion-menu.js"></script>
+  <script type="module" src="js/registro/registro.js"></script>
+
+</body>
+</html>

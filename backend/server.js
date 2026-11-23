@@ -96,6 +96,43 @@ app.patch('/api/registros/:id',auth,wrap(async(req,res)=>{
  const [row]=await sql`UPDATE portal_registros SET estado=${estado},actualizado_en=NOW() WHERE id=${id} RETURNING id,estado`;
  if(!row)return res.status(404).json({error:'Registro no encontrado'});res.json(row);
 }));
+
+// Operaciones de dominios independientes. Todos comparten un PostgreSQL y una identidad.
+const domainColumns={
+ sat:['nombre_propietario','dni','tipo_impuesto','motivo','valor_tasacion','monto_calculado','codigo_referencia','estado_pago'],
+ metrobus:['numero_tarjeta','monto_recarga','tarjeta_nueva','pase_universitario','monto_calculado','codigo_referencia','estado_pago'],
+ crm:['nombre','empresa','correo_contacto','num_usuarios','mensaje','modulo_facturacion','usuarios_crm','meses','monto_calculado','codigo_referencia','estado_pago'],
+ agua:['nombre_vecino','direccion','descripcion','zona','diametro_pulg','imagen_url','monto_calculado','codigo_referencia','estado_pago']
+};
+function normalizedDomainData(mod,input){
+ const obj={};for(const key of domainColumns[mod]){
+   const value=input?.[key];if(typeof value==='boolean'){obj[key]=value;continue;}
+   if(value===undefined||value===null||value===''){obj[key]='';continue;}
+   if(!['string','number'].includes(typeof value))throw new Error('Dato inválido');
+   const s=String(value).trim();if(s.length>2000)throw new Error('Dato demasiado largo');obj[key]=s;
+ }
+ const mandatory={sat:['nombre_propietario','dni','tipo_impuesto','motivo'],metrobus:['numero_tarjeta','monto_recarga'],crm:['nombre','empresa','correo_contacto','num_usuarios','mensaje'],agua:['nombre_vecino','direccion','descripcion','zona','diametro_pulg']};
+ for(const k of mandatory[mod])if(!obj[k])throw new Error('Completa el campo '+k);
+ if(mod==='sat'&&!/^\d{8}$/.test(obj.dni))throw new Error('El DNI debe tener 8 dígitos');
+ if(mod==='metrobus'&&!/^\d{10}$/.test(obj.numero_tarjeta))throw new Error('La tarjeta debe tener 10 dígitos');
+ if(mod==='metrobus'&&!(Number(obj.monto_recarga)>=2&&Number(obj.monto_recarga)<=2000))throw new Error('Monto entre S/2 y S/2000');
+ if(mod==='agua'&&!(Number(obj.diametro_pulg)>0&&Number(obj.diametro_pulg)<1000))throw new Error('Diámetro inválido');
+ return obj;
+}
+app.get('/api/modulos/:modulo/items',auth,wrap(async(req,res)=>{
+ const modulo=req.params.modulo;if(!modules.has(modulo))return res.status(404).json({error:'Módulo no encontrado'});
+ const items=req.user.rol==='cliente' ? await sql`SELECT id,codigo,datos,estado,creado_en FROM portal_modulo_items WHERE modulo=${modulo} AND usuario_id=${req.user.id} ORDER BY id DESC LIMIT 100`
+ :await sql`SELECT id,codigo,datos,estado,creado_en FROM portal_modulo_items WHERE modulo=${modulo} ORDER BY id DESC LIMIT 100`;
+ res.json(items);
+}));
+app.post('/api/modulos/:modulo/items',auth,wrap(async(req,res)=>{
+ const modulo=req.params.modulo;if(!modules.has(modulo))return res.status(404).json({error:'Módulo no encontrado'});
+ let datos;try{datos=normalizedDomainData(modulo,req.body)}catch(e){return res.status(400).json({error:e.message})}
+ const codigo=`${{sat:'SAT',metrobus:'MB',crm:'CRM',agua:'AG'}[modulo]}-${randomBytes(5).toString('hex').toUpperCase()}`;
+ const [item]=await sql`INSERT INTO portal_modulo_items(modulo,usuario_id,codigo,datos) VALUES (${modulo},${req.user.id},${codigo},${JSON.stringify(datos)}::jsonb) RETURNING id,codigo,datos,estado,creado_en`;
+ res.status(201).json(item);
+}));
+
 app.get('/',(req,res)=>res.json({servicio:'Portal360 API',estado:'online',salud:'/api/health',frontend:'https://portal360-web.vercel.app'}));
 app.use((req,res)=>res.status(404).json({error:'Ruta no encontrada'}));
 app.listen(process.env.PORT||4000,()=>console.log(`Portal disponible en http://localhost:${process.env.PORT||4000}`));

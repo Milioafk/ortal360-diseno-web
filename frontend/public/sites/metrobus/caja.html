@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Módulo de caja de MetroBus Lima: cobro en ventanilla y verificación de pagos en línea">
+  <title>MetroBus Lima - Caja</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/caja.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="marca" href="index.html">
+        <span class="marca-punto" aria-hidden="true"></span>
+        <span class="marca-texto">Metro<em>Bus</em> Lima</span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="rutas.html">Rutas</a></li>
+          <li><a href="como-funciona.html">Cómo funciona</a></li>
+          <li><a href="registro.html">Recargar tarjeta</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li id="nav-sesion"><a href="login.html">Iniciar sesión</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="caja">
+      <h2>Módulo de caja</h2>
+      <p id="caja-sesion" class="caja-sesion"></p>
+
+      <div id="caja-contenido">
+        <div id="mensaje-caja" class="confirmacion-recarga" role="status"></div>
+        <p id="enlace-comprobante" class="enlace-comprobante" hidden>
+          <a id="enlace-comprobante-a" href="comprobante.html" target="_blank" rel="noopener">Ver comprobante de la última operación</a>
+        </p>
+
+        <h3 id="t-cobro" class="caja-subtitulo">Cobro presencial</h3>
+        <form id="form-buscar" class="caja-buscar" role="search">
+          <label for="criterio">Código de recarga, DNI, nombre o número de tarjeta:</label>
+          <div class="caja-buscar-fila">
+            <input type="search" id="criterio" name="criterio" autocomplete="off" placeholder="Ej. COD-0000, 70000012 o Cliente 3">
+            <button type="submit" class="btn-recarga">Buscar</button>
+          </div>
+        </form>
+        <div class="tabla-contenedor">
+          <table class="tabla-datos" id="tabla-pendientes">
+            <caption>Recargas pendientes de pago</caption>
+            <thead>
+              <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">DNI</th>
+                <th scope="col">Tarjeta</th>
+                <th scope="col">Total</th>
+                <th scope="col">Acción</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <h3 id="t-linea" class="caja-subtitulo">Pagos recibidos por la pasarela</h3>
+        <p id="aviso-nuevos" class="aviso-nuevos" role="status" aria-live="polite"></p>
+        <div class="caja-filtros">
+          <div>
+            <label for="fecha-caja">Fecha:</label>
+            <input type="date" id="fecha-caja" name="fecha-caja">
+          </div>
+          <label class="check-filtro" for="solo-por-verificar">
+            <input type="checkbox" id="solo-por-verificar"> Solo pendientes de verificar
+          </label>
+          <p id="caja-vivo" class="caja-vivo"></p>
+        </div>
+        <div class="tabla-contenedor">
+          <table class="tabla-datos" id="tabla-en-linea">
+            <caption>Operaciones en línea</caption>
+            <thead>
+              <tr>
+                <th scope="col">Hora</th>
+                <th scope="col">Operación</th>
+                <th scope="col">Recarga</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Medio</th>
+                <th scope="col">Monto</th>
+                <th scope="col">Resultado</th>
+                <th scope="col">Verificación</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <h3 id="t-resumen" class="caja-subtitulo">Resumen del día (cierre de caja)</h3>
+        <div class="tabla-contenedor">
+          <table class="tabla-datos" id="tabla-resumen">
+            <caption>Operaciones aprobadas de la fecha elegida</caption>
+            <thead>
+              <tr>
+                <th scope="col">Canal</th>
+                <th scope="col">Medio</th>
+                <th scope="col">Operaciones</th>
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="total-dia">Total recaudado: <strong id="total-dia">S/ 0.00</strong></p>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="dialogo-cobro" class="dialogo-cobro" aria-labelledby="t-dialogo">
+    <form id="form-cobro">
+      <h3 id="t-dialogo">Registrar cobro</h3>
+      <p class="cobro-resumen">Recarga <strong id="cobro-codigo"></strong> · Total <strong id="cobro-total"></strong></p>
+
+      <label for="metodo-caja">Medio de pago:</label>
+      <select id="metodo-caja" name="metodo">
+        <option value="efectivo">Efectivo</option>
+        <option value="pos">Tarjeta en POS</option>
+        <option value="andipay">Billetera AndiPay (QR)</option>
+        <option value="pagomovil">Billetera PagoMóvil (QR)</option>
+      </select>
+
+      <div id="campo-recibido">
+        <label for="monto-recibido">Monto recibido (S/):</label>
+        <input type="number" id="monto-recibido" name="monto_recibido" min="0" step="0.01">
+        <p class="cobro-vuelto">Vuelto: <output id="vuelto" for="monto-recibido">S/ 0.00</output></p>
+      </div>
+
+      <div id="campo-referencia" hidden>
+        <label for="referencia">N.° de voucher u operación:</label>
+        <input type="text" id="referencia" name="referencia" inputmode="numeric" maxlength="12" placeholder="6 a 12 dígitos">
+      </div>
+
+      <div class="cobro-acciones">
+        <button type="submit" class="btn-recarga" id="confirmar-cobro">Confirmar cobro</button>
+        <button type="button" class="btn-cancelar" id="cancelar-cobro">Cancelar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="pie-mapa">
+    <div class="pie-columnas">
+      <div class="pie-col">
+        <p class="pie-marca">Metro<span>Bus</span> Lima</p>
+        <p>Transporte urbano masivo para Lima: puntual, seguro y siempre a tiempo para tu día.</p>
+      </div>
+      <div class="pie-col">
+        <h4>Mapa del sitio</h4>
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="rutas.html">Rutas</a>
+        <a href="como-funciona.html">Cómo funciona</a>
+        <a href="registro.html">Recargar tarjeta</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div class="pie-col">
+        <h4>Líneas</h4>
+        <a href="rutas.html">Línea A · Naranja</a>
+        <a href="rutas.html">Línea B · Verde</a>
+        <a href="rutas.html">Línea C · Alimentadora</a>
+      </div>
+      <div class="pie-col">
+        <h4>Atención al cliente</h4>
+        <p>Lima, Perú</p>
+        <p>Proyecto educativo del curso de Diseño Web</p>
+      </div>
+    </div>
+    <p class="pie-copy">MetroBus Lima &copy; 2026 — Proyecto educativo del curso de Diseño Web.</p>
+  </footer>
+
+  <script type="module" src="js/auth/sesion-menu.js"></script>
+  <script type="module" src="js/caja/caja.js"></script>
+
+</body>
+</html>

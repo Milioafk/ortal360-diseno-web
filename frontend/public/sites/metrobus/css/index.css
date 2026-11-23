@@ -1,0 +1,394 @@
+/* Inicio — hoja de estilos propia de index.html */
+
+/* =========================================================
+   MetroBus Lima — sistema de diseño
+   Paleta inspirada en el carril exclusivo del bus troncal:
+   naranja del bus, noche urbana, líneas de ruta y boletos.
+   ========================================================= */
+
+:root {
+  --naranja-bus: #E85D25;
+  --naranja-bus-oscuro: #C24913;
+  --azul-noche: #101B2E;
+  --azul-noche-suave: #1B3358;
+  --amarillo-parada: #FFC94A;
+  --linea-b: #1F8A6F;
+  --linea-c: #7A5FB0;
+  --crema-boleto: #FFF8EC;
+  --fondo: #DCEBFA;
+  --asfalto: #2B2F36;
+  --gris-linea: #D7DBE0;
+  --sombra: 0 10px 26px rgba(16, 27, 46, 0.16);
+  --sombra-fuerte: 0 18px 40px rgba(16, 27, 46, 0.28);
+  --transicion: 220ms cubic-bezier(.4,0,.2,1);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Work Sans', 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  color: var(--asfalto);
+  background-color: var(--fondo);
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(255, 201, 74, 0.35), transparent 38%),
+    radial-gradient(circle at 92% 18%, rgba(232, 93, 37, 0.14), transparent 40%),
+    linear-gradient(165deg, #CFE5FF 0%, #E6F1FF 50%, #FFEBD6 100%);
+  background-attachment: fixed;
+  line-height: 1.55;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+h1, h2, h3 {
+  font-family: 'Bebas Neue', 'Segoe UI', Arial, sans-serif;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+}
+
+h2 { color: var(--azul-noche); font-size: 2.1rem; }
+
+a { color: inherit; }
+
+/* ===== Encabezado (efecto: degradado en el encabezado) ===== */
+header.site-header {
+  background: linear-gradient(120deg, var(--azul-noche), var(--azul-noche-suave));
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 3px solid var(--naranja-bus);
+  box-shadow: 0 4px 18px rgba(16, 27, 46, 0.28);
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 14px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: white;
+}
+.marca-punto {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--naranja-bus);
+  border: 3px solid var(--amarillo-parada);
+  flex-shrink: 0;
+}
+.marca-texto {
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.03em;
+}
+.marca-texto em { font-style: normal; color: var(--amarillo-parada); }
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+
+header nav a {
+  display: inline-block;
+  color: #dfe6f2;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: color 0.3s ease;
+}
+/* Transición: color en el menú */
+header nav a:hover,
+header nav a:focus-visible {
+  color: var(--amarillo-parada);
+}
+header nav a[aria-current="page"] {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: white;
+}
+
+/* ===== Botones ===== */
+.btn {
+  display: inline-block;
+  padding: 13px 26px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  border: 2px solid transparent;
+  transition: transform var(--transicion), box-shadow var(--transicion), background-color var(--transicion);
+}
+.btn:hover,
+.btn:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra);
+}
+.btn-primario {
+  background-color: var(--naranja-bus);
+  color: white;
+}
+.btn-primario:hover,
+.btn-primario:focus-visible {
+  background-color: var(--naranja-bus-oscuro);
+}
+.btn-secundario {
+  background-color: transparent;
+  color: white;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+.btn-secundario:hover,
+.btn-secundario:focus-visible {
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+/* El atributo hidden siempre oculta (aunque el elemento tenga display propio) */
+[hidden] { display: none !important; }
+
+section { padding: 56px 32px; max-width: 1000px; margin: 0 auto; }
+h2 { text-align: center; margin-bottom: 30px; }
+section > p { max-width: 68ch; margin-left: auto; margin-right: auto; }
+
+/* ===== Sesión en el menú (Semana 6) ===== */
+.btn-cerrar-sesion {
+  font: inherit;
+  background: none;
+  border: 1px solid transparent;
+  color: #dfe6f2;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.btn-cerrar-sesion:hover,
+.btn-cerrar-sesion:focus-visible {
+  color: var(--amarillo-parada);
+}
+
+/* ===== Pie de página tipo "mapa del sitio" ===== */
+footer.pie-mapa {
+  background-color: var(--azul-noche);
+  color: #cfd8e6;
+  padding: 48px 32px 22px;
+}
+.pie-columnas {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 28px;
+}
+.pie-marca {
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.03em;
+  color: white;
+  margin: 0 0 8px;
+}
+.pie-marca span { color: var(--amarillo-parada); }
+.pie-col p { font-size: 0.88rem; color: #cfd8e6; margin: 0 0 6px; }
+.pie-col h4 {
+  color: white;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 12px;
+}
+.pie-col a {
+  display: block;
+  color: #cfd8e6;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  transition: color var(--transicion);
+}
+.pie-col a:hover,
+.pie-col a:focus-visible { color: var(--amarillo-parada); }
+.pie-copy {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #93a1bb;
+  margin: 36px 0 0;
+}
+@media (max-width: 800px) {
+  .pie-columnas { grid-template-columns: 1fr 1fr; }
+}
+
+/* ===== Hero (Inicio) — ocupa todo el ancho de la ventana ===== */
+/* La regla general "section" limita el ancho a 1000px; el hero la anula para llegar a los bordes. */
+.hero {
+  max-width: none;
+  margin: 0;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  color: white;
+  padding: 80px 32px 110px;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(232, 93, 37, 0.28), transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(255, 201, 74, 0.14), transparent 40%),
+    linear-gradient(160deg, var(--azul-noche) 0%, var(--azul-noche-suave) 70%);
+}
+/* Línea de ruta decorativa en la parte baja del hero */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 38px;
+  height: 6px;
+  background: repeating-linear-gradient(90deg, var(--amarillo-parada) 0 28px, transparent 28px 44px);
+  opacity: 0.55;
+}
+.hero-grid {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+.hero h1 { font-size: 3.8rem; margin: 0 0 18px; text-wrap: balance; }
+.hero p.hero-intro { font-size: 1.2rem; color: #dfe6f2; max-width: 46ch; margin: 0; }
+.hero-acciones { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+
+/* ===== Imagen principal adaptativa (figure + figcaption) ===== */
+.banner-figura {
+  margin: 0;
+  justify-self: center;
+  width: min(100%, 380px);
+  text-align: center;
+}
+.banner-marco {
+  background-color: #ffffff;
+  border-radius: 50%;
+  padding: 14px;
+  border: 6px solid var(--amarillo-parada);
+  box-shadow: 0 0 0 14px rgba(255, 255, 255, 0.08), 0 24px 50px rgba(0, 0, 0, 0.45);
+}
+.banner-marco img { display: block; width: 100%; height: auto; border-radius: 50%; }
+.banner-figura figcaption {
+  margin-top: 26px;
+  font-size: 0.95rem;
+  color: #dfe6f2;
+}
+
+/* ===== Franja de cifras: tarjetas que se superponen al hero ===== */
+.cifras {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: -62px auto 0;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  text-align: center;
+}
+.cifras > div {
+  background-color: white;
+  border-radius: 16px;
+  padding: 22px 12px;
+  border-top: 4px solid var(--naranja-bus);
+  box-shadow: var(--sombra);
+}
+.cifras .cifra-numero {
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--naranja-bus);
+  display: block;
+}
+.cifras .cifra-etiqueta { font-size: 0.9rem; color: var(--asfalto); }
+
+/* ===== Bienvenida ===== */
+#inicio h2 { position: relative; padding-bottom: 14px; }
+#inicio h2::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--naranja-bus);
+  margin: 12px auto 0;
+}
+#inicio p { font-size: 1.05rem; }
+
+/* ===== Accesos rápidos ===== */
+.accesos { padding-top: 8px; padding-bottom: 72px; }
+.accesos-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.acceso-tarjeta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  gap: 8px;
+  padding: 28px 20px;
+  background-color: white;
+  border-radius: 16px;
+  text-decoration: none;
+  box-shadow: var(--sombra);
+  border-bottom: 4px solid transparent;
+  transition: transform var(--transicion), border-color var(--transicion), box-shadow var(--transicion);
+}
+.acceso-tarjeta:hover,
+.acceso-tarjeta:focus-visible {
+  transform: translateY(-5px);
+  border-bottom-color: var(--naranja-bus);
+  box-shadow: var(--sombra-fuerte);
+}
+.acceso-titulo {
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+  color: var(--azul-noche);
+}
+.acceso-texto { font-size: 0.92rem; color: var(--asfalto); }
+
+@media (max-width: 860px) {
+  .hero { padding: 56px 20px 96px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+  .hero p.hero-intro { margin: 0 auto; }
+  .hero-acciones { justify-content: center; }
+  .hero h1 { font-size: 2.6rem; }
+  .accesos-lista { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .cifras { grid-template-columns: 1fr; margin-top: -48px; }
+  .banner-figura { width: min(100%, 260px); }
+}

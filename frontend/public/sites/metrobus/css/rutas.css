@@ -1,0 +1,357 @@
+/* Rutas — hoja de estilos propia de rutas.html */
+
+/* =========================================================
+   MetroBus Lima — sistema de diseño
+   Paleta inspirada en el carril exclusivo del bus troncal:
+   naranja del bus, noche urbana, líneas de ruta y boletos.
+   ========================================================= */
+
+:root {
+  --naranja-bus: #E85D25;
+  --naranja-bus-oscuro: #C24913;
+  --azul-noche: #101B2E;
+  --azul-noche-suave: #1B3358;
+  --amarillo-parada: #FFC94A;
+  --linea-b: #1F8A6F;
+  --linea-c: #7A5FB0;
+  --crema-boleto: #FFF8EC;
+  --fondo: #DCEBFA;
+  --asfalto: #2B2F36;
+  --gris-linea: #D7DBE0;
+  --sombra: 0 10px 26px rgba(16, 27, 46, 0.16);
+  --sombra-fuerte: 0 18px 40px rgba(16, 27, 46, 0.28);
+  --transicion: 220ms cubic-bezier(.4,0,.2,1);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Work Sans', 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  color: var(--asfalto);
+  background-color: var(--fondo);
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(255, 201, 74, 0.35), transparent 38%),
+    radial-gradient(circle at 92% 18%, rgba(232, 93, 37, 0.14), transparent 40%),
+    linear-gradient(165deg, #CFE5FF 0%, #E6F1FF 50%, #FFEBD6 100%);
+  background-attachment: fixed;
+  line-height: 1.55;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+h1, h2, h3 {
+  font-family: 'Bebas Neue', 'Segoe UI', Arial, sans-serif;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+}
+
+h2 { color: var(--azul-noche); font-size: 2.1rem; }
+
+a { color: inherit; }
+
+/* ===== Encabezado (efecto: degradado en el encabezado) ===== */
+header.site-header {
+  background: linear-gradient(120deg, var(--azul-noche), var(--azul-noche-suave));
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 3px solid var(--naranja-bus);
+  box-shadow: 0 4px 18px rgba(16, 27, 46, 0.28);
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 14px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: white;
+}
+.marca-punto {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--naranja-bus);
+  border: 3px solid var(--amarillo-parada);
+  flex-shrink: 0;
+}
+.marca-texto {
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.03em;
+}
+.marca-texto em { font-style: normal; color: var(--amarillo-parada); }
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+
+header nav a {
+  display: inline-block;
+  color: #dfe6f2;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: color 0.3s ease;
+}
+/* Transición: color en el menú */
+header nav a:hover,
+header nav a:focus-visible {
+  color: var(--amarillo-parada);
+}
+header nav a[aria-current="page"] {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: white;
+}
+
+/* ===== Botones ===== */
+.btn {
+  display: inline-block;
+  padding: 13px 26px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  border: 2px solid transparent;
+  transition: transform var(--transicion), box-shadow var(--transicion), background-color var(--transicion);
+}
+.btn:hover,
+.btn:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra);
+}
+.btn-primario {
+  background-color: var(--naranja-bus);
+  color: white;
+}
+.btn-primario:hover,
+.btn-primario:focus-visible {
+  background-color: var(--naranja-bus-oscuro);
+}
+.btn-secundario {
+  background-color: transparent;
+  color: white;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+.btn-secundario:hover,
+.btn-secundario:focus-visible {
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+/* El atributo hidden siempre oculta (aunque el elemento tenga display propio) */
+[hidden] { display: none !important; }
+
+section { padding: 56px 32px; max-width: 1000px; margin: 0 auto; }
+h2 { text-align: center; margin-bottom: 30px; }
+section > p { max-width: 68ch; margin-left: auto; margin-right: auto; }
+
+/* ===== Sesión en el menú (Semana 6) ===== */
+.btn-cerrar-sesion {
+  font: inherit;
+  background: none;
+  border: 1px solid transparent;
+  color: #dfe6f2;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.btn-cerrar-sesion:hover,
+.btn-cerrar-sesion:focus-visible {
+  color: var(--amarillo-parada);
+}
+
+/* ===== Pie de página tipo "mapa del sitio" ===== */
+footer.pie-mapa {
+  background-color: var(--azul-noche);
+  color: #cfd8e6;
+  padding: 48px 32px 22px;
+}
+.pie-columnas {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 28px;
+}
+.pie-marca {
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.03em;
+  color: white;
+  margin: 0 0 8px;
+}
+.pie-marca span { color: var(--amarillo-parada); }
+.pie-col p { font-size: 0.88rem; color: #cfd8e6; margin: 0 0 6px; }
+.pie-col h4 {
+  color: white;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 12px;
+}
+.pie-col a {
+  display: block;
+  color: #cfd8e6;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  transition: color var(--transicion);
+}
+.pie-col a:hover,
+.pie-col a:focus-visible { color: var(--amarillo-parada); }
+.pie-copy {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #93a1bb;
+  margin: 36px 0 0;
+}
+@media (max-width: 800px) {
+  .pie-columnas { grid-template-columns: 1fr 1fr; }
+}
+
+/* ===== Tabla de rutas ===== */
+.bloque-rutas {
+  background-color: white;
+  border-radius: 14px;
+  padding: 22px;
+  overflow-x: auto;
+  /* Efecto: sombra en el bloque de rutas */
+  box-shadow: 0 12px 32px rgba(16, 27, 46, 0.22);
+}
+table { width: 100%; border-collapse: collapse; min-width: 460px; }
+th, td { padding: 14px; border-bottom: 1px solid var(--gris-linea); text-align: left; }
+th { background-color: var(--azul-noche); color: white; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 0.03em; font-size: 1.05rem; }
+tbody tr:nth-child(even) { background-color: var(--crema-boleto); }
+tbody tr { transition: background-color var(--transicion); }
+tbody tr:hover { background-color: var(--amarillo-parada); }
+td.ruta-nombre { font-weight: 700; }
+.punto-linea { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; }
+.punto-linea.linea-a { background-color: var(--naranja-bus); }
+.punto-linea.linea-b { background-color: var(--linea-b); }
+.punto-linea.linea-c { background-color: var(--linea-c); }
+
+.datos-contacto { text-align: center; margin-top: 20px; }
+
+/* ===== Panel de simulación (animación 1: bus recorriendo la ruta) ===== */
+.simulacion-figura {
+  margin: 40px auto 0;
+  max-width: 640px;
+  text-align: center;
+  background-color: var(--azul-noche);
+  border-radius: 14px;
+  padding: 20px 14px 8px;
+}
+.svg-simulacion { width: 100%; height: auto; }
+.simulacion-figura figcaption { color: #cfd8e6; font-size: 0.85rem; padding: 10px 0 2px; }
+
+.bus-punto {
+  animation: recorrido-bus 6s linear infinite;
+}
+
+@keyframes recorrido-bus {
+  0%   { transform: translateX(0); }
+  30%  { transform: translateX(170px); }
+  60%  { transform: translateX(340px); }
+  100% { transform: translateX(540px); }
+}
+
+/* ===== Buscador de estaciones ===== */
+.buscador-contenedor {
+  text-align: center;
+  margin-top: 34px;
+}
+.buscador-contenedor label { font-weight: 700; margin-right: 8px; }
+.buscador-contenedor input[type="search"] {
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--gris-linea);
+  width: 240px;
+  max-width: 90%;
+  font-family: inherit;
+}
+
+/* ===== Lista de estaciones por línea ===== */
+.lineas-estaciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  margin-top: 30px;
+}
+.linea {
+  background-color: white;
+  border-radius: 14px;
+  padding: 20px 22px;
+  width: 260px;
+  box-shadow: 0 2px 10px rgba(16, 27, 46, 0.1);
+  border-top: 5px solid var(--naranja-bus);
+  transition: transform var(--transicion), box-shadow var(--transicion);
+}
+.linea:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--sombra-fuerte);
+}
+.linea.linea-b { border-top-color: var(--linea-b); }
+.linea.linea-c { border-top-color: var(--linea-c); }
+.linea h3 { font-family: 'Work Sans', sans-serif; font-size: 1rem; font-weight: 700; color: var(--azul-noche); margin-top: 0; }
+
+.estaciones-lista { list-style: none; margin: 0; padding: 0; }
+
+.estaciones-lista li {
+  padding: 9px 12px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  background-color: var(--fondo);
+  transition: background-color 0.25s ease, transform 0.2s ease;
+  opacity: 0;
+  animation: aparicion-estaciones 0.5s ease forwards;
+}
+
+/* Transición: resaltado en las estaciones al pasar el mouse */
+.estaciones-lista li:hover {
+  background-color: var(--amarillo-parada);
+  transform: translateX(6px);
+}
+
+/* Animación 3: aparición progresiva de la lista de estaciones */
+.estaciones-lista li:nth-child(1) { animation-delay: 0.1s; }
+.estaciones-lista li:nth-child(2) { animation-delay: 0.3s; }
+.estaciones-lista li:nth-child(3) { animation-delay: 0.5s; }
+.estaciones-lista li:nth-child(4) { animation-delay: 0.7s; }
+.estaciones-lista li:nth-child(5) { animation-delay: 0.9s; }
+
+@keyframes aparicion-estaciones {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
