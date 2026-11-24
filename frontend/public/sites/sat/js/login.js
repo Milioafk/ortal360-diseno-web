@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // La API asigna los roles; nunca se eligen durante el registro público.
                 setTimeout(() => {
                     window.location.href = ['administrador', 'operador', 'empleado'].includes(usuario.rol)
-                        ? 'gestion.html' : 'integracion.html';
+                        ? 'panel.html' : 'integracion.html';
                 }, 600);
             } else {
                 mostrarMensaje('Correo o contraseña incorrectos', 'error');

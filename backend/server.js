@@ -116,6 +116,7 @@ app.get('/api/registros',auth,wrap(async(req,res)=>{
 app.post('/api/registros',auth,wrap(async(req,res)=>{
  const modulo=String(req.body?.modulo||''),titulo=String(req.body?.titulo||'').trim(),detalle=String(req.body?.detalle||'').trim();
  if(!modules.has(modulo)||titulo.length<3||titulo.length>160||detalle.length<5||detalle.length>4000)return res.status(400).json({error:'Completa módulo, título (3–160) y detalle (5–4000)'});
+ if(req.user.rol==='operador'&&!await allowedModule(req.user,modulo))return res.status(403).json({error:'Empleado sin acceso a este módulo'});
  const [row]=await sql`INSERT INTO portal_registros (modulo,usuario_id,titulo,detalle) VALUES (${modulo},${req.user.id},${titulo},${detalle}) RETURNING id,modulo,titulo,detalle,estado,creado_en`;
  res.status(201).json(row);
 }));
@@ -163,7 +164,10 @@ app.get('/api/modulos/:modulo/items',auth,wrap(async(req,res)=>{
 }));
 app.post('/api/modulos/:modulo/items',auth,wrap(async(req,res)=>{
  const modulo=req.params.modulo;if(!modules.has(modulo))return res.status(404).json({error:'Módulo no encontrado'});
+ if(req.user.rol==='operador'&&!await allowedModule(req.user,modulo))return res.status(403).json({error:'Empleado sin acceso a este módulo'});
  let datos;try{datos=normalizedDomainData(modulo,req.body)}catch(e){return res.status(400).json({error:e.message})}
+ // Ningún endpoint de esta demo registra pagos realizados ni saldos de transporte.
+ datos.estado_pago='pendiente_simulado_sin_cobro';
  const codigo=`${{sat:'SAT',metrobus:'MB',crm:'CRM',agua:'AG'}[modulo]}-${randomBytes(5).toString('hex').toUpperCase()}`;
  const [item]=await sql`INSERT INTO portal_modulo_items(modulo,usuario_id,codigo,datos) VALUES (${modulo},${req.user.id},${codigo},${JSON.stringify(datos)}::jsonb) RETURNING id,codigo,datos,estado,creado_en`;
  await logAudit(req.user.id,'crear_solicitud',modulo,Number(item.id),{codigo:item.codigo});
@@ -213,13 +217,22 @@ app.get('/api/gestion/solicitudes',auth,wrap(async(req,res)=>{
 app.patch('/api/gestion/solicitudes/:id',auth,wrap(async(req,res)=>{
  if(!['operador','administrador'].includes(req.user.rol))return res.status(403).json({error:'No puedes tramitar solicitudes'});
  const id=Number(req.params.id),estado=String(req.body?.estado||'');
- if(!Number.isSafeInteger(id)||id<1||!['registrado','en_revision','atendido'].includes(estado))return res.status(400).json({error:'Estado o ID inválido'});
- const [old]=await sql`SELECT x.modulo,x.estado,u.es_demo AS propietario_demo FROM portal_modulo_items x JOIN portal_usuarios u ON u.id=x.usuario_id WHERE x.id=${id}`;
+ if(!Number.isSafeInteger(id)||id<1||!['registrado','en_revision','atendido','rechazado'].includes(estado))return res.status(400).json({error:'Estado o ID inválido'});
+ const [old]=await sql`SELECT x.modulo,x.estado,x.datos,u.es_demo AS propietario_demo FROM portal_modulo_items x JOIN portal_usuarios u ON u.id=x.usuario_id WHERE x.id=${id}`;
  if(!old)return res.status(404).json({error:'Solicitud inexistente'});
  if(req.user.es_demo&&!old.propietario_demo)return res.status(403).json({error:'Solo puedes atender registros ficticios'});
  if(!await allowedModule(req.user,old.modulo))return res.status(403).json({error:'No tienes permiso en este módulo'});
- const [result]=await sql`UPDATE portal_modulo_items SET estado=${estado},asignado_a=${req.user.id},actualizado_en=NOW() WHERE id=${id} RETURNING id,codigo,modulo,estado,asignado_a`;
- await logAudit(req.user.id,'actualizar_estado',old.modulo,id,{anterior:old.estado,nuevo:estado});
+ // La edición conserva los atributos internos del sistema. No se admiten cambios de pago por esta API.
+ const provided=req.body?.datos;
+ let updated=old.datos;
+ if(provided!==undefined){
+  if(!provided||typeof provided!=='object'||Array.isArray(provided))return res.status(400).json({error:'Formato de datos inválido'});
+  const editable=new Set(domainColumns[old.modulo].filter(k=>!['estado_pago','monto_calculado','codigo_referencia'].includes(k)));
+  if(Object.keys(provided).some(k=>!editable.has(k)))return res.status(400).json({error:'Campo de edición no autorizado'});
+  try{updated=normalizedDomainData(old.modulo,{...old.datos,...provided});}catch(e){return res.status(400).json({error:e.message})}
+ }
+ const [result]=await sql`UPDATE portal_modulo_items SET estado=${estado},datos=${JSON.stringify(updated)}::jsonb,asignado_a=${req.user.id},actualizado_en=NOW() WHERE id=${id} RETURNING id,codigo,modulo,datos,estado,asignado_a`;
+ await logAudit(req.user.id,provided===undefined?'actualizar_estado':'editar_solicitud',old.modulo,id,{anterior:old.estado,nuevo:estado,campos:provided?Object.keys(provided):[]});
  res.json(result);
 }));
 app.get('/api/gestion/usuarios',auth,wrap(async(req,res)=>{

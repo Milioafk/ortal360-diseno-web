@@ -84,9 +84,9 @@ export function exigirRol(...rolesPermitidos) {
 export function rutaInicioSegunRol(rol) {
   const rutas = {
     cliente: 'integracion.html',
-    administrador: 'gestion.html',
-    operador: 'gestion.html',
-    empleado: 'gestion.html',
+    administrador: 'panel.html',
+    operador: 'panel.html',
+    empleado: 'panel.html',
     cajero: 'gestion.html'  // solo panel de supervisión; caja no opera pagos reales
   };
   return rutas[rol] ?? 'index.html';

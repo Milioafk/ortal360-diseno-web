@@ -20,7 +20,7 @@ formLogin.addEventListener('submit', async (e) => {
     const sig = new URLSearchParams(location.search).get('siguiente') || '';
     const valida = /^(registro|consulta|actualizar|comprobante)\.html(\?(id|op)=[\w-]+)?$/.test(sig);
     const esPersonal = ['administrador', 'operador', 'empleado'].includes(usuario.rol);
-    window.location.href = esPersonal ? 'gestion.html' : (valida ? sig : rutaInicioSegunRol(usuario.rol));
+    window.location.href = esPersonal ? 'panel.html' : (valida ? sig : rutaInicioSegunRol(usuario.rol));
   } catch (err) { mostrarError(mensajeError(err, 'No se pudo conectar con la base de datos.')); }
 });
 

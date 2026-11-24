@@ -1,15 +1,27 @@
 <!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=gestion.html">
-  <title>MetroBus Lima · Panel de gestión conectado</title>
-  <style>
-  body{min-height:100vh;margin:0;display:grid;place-items:center;background:#071422;color:#f4f8ff;font:16px system-ui,sans-serif}
-  main{max-width:560px;margin:24px;padding:30px;border:1px solid #415575;border-radius:18px;background:#103c75}
-  a{display:inline-block;background:#abffe5;color:#062a31;padding:12px 18px;border-radius:9px;text-decoration:none;font-weight:800}
-  small{color:#bcd2e4} h1{font-size:1.6rem}
-  </style>
-  <script>window.location.replace('gestion.html');</script>
-</head>
-<body><main><h1>🚌 MetroBus Lima · Panel seguro</h1><p>El panel administrativo se ha integrado con Portal360. Los datos se consultan desde Render en la misma base Neon y los permisos se verifican en el servidor.</p><p><a href="gestion.html">Abrir panel de administrador / empleado</a></p><small>Turnos, caja y pagos heredados no se han migrado; no se realizan cobros reales.</small></main></body></html>
+<html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>MetroBus Lima — Panel de gestión propio · Neon</title>
+<link rel="stylesheet" href="css/panel.css"><link rel="stylesheet" href="css/native-panel.css">
+</head><body data-p360-module="metrobus">
+<header class="native-header"><div class="native-nav"><a class="native-brand bus-logo" href="index.html"><b>METRO<span>BUS</span> LIMA</b><small>Transporte inteligente</small></a><nav aria-label="Navegación del sistema"><a href="index.html">Inicio</a><a href="integracion.html">Solicitudes</a><a class="current" href="panel.html" aria-current="page">Panel del sitio</a><a href="https://portal360-web.vercel.app/gestion/index.html" target="_blank" rel="noopener">Panel general ↗</a></nav></div></header>
+<main class="native-main">
+<div class="intro"><div><p class="overline">SISTEMA DE TRANSPORTE · CONECTADO CON NEON</p><h1>Control de recargas</h1><p class="subline">Registrar recargas y atender incidencias de tarjetas. Los importes son simulados: NO representan saldo ni cobros efectuados.</p></div><span class="integration"><span class="integration-dot"></span>API Render · Neon PostgreSQL</span></div>
+<div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+<section id="loginGate" class="login-gate"><div class="box"><p class="overline">IDENTIDAD COMPARTIDA · PORTAL360</p><h2>Accede a tu panel de MetroBus Lima</h2><p>Inicia sesión con tu cuenta de administrador, empleado o cliente. La base es la misma que utiliza el panel general.</p><form id="loginForm" class="login-form"><label class="panel-field"><span>Correo electrónico</span><input name="correo" type="email" required autocomplete="username" placeholder="admin01@portal360.example"></label><label class="panel-field"><span>Contraseña</span><input name="contrasena" type="password" required autocomplete="current-password" placeholder="Contraseña del Excel privado"></label><button class="native-button primary" type="submit">Entrar a MetroBus Lima</button></form></div><div class="box help"><h3>Accesos específicos</h3><p><strong>Administrador:</strong> atiende este módulo y organiza su equipo.</p><p><strong>Empleado:</strong> ve y tramita solo los módulos asignados.</p><p><strong>Cliente:</strong> registra solicitudes y consulta exclusivamente las suyas.</p><p class="panel-note">No publiques el Excel de contraseñas en GitHub.</p></div></section>
+<div id="workspace" hidden>
+<section class="session-strip"><div><p class="overline">SESIÓN ACTIVA</p><h2 id="who">Cargando...</h2><div class="session-sub"><span id="role"></span><span id="scope"></span></div></div><div class="toolbar"><button class="native-button secondary" id="reload" type="button">↻ Actualizar</button><button class="native-button danger" id="logout" type="button">Cerrar sesión</button></div></section>
+<section class="stats" id="stats" aria-label="Indicadores de MetroBus Lima"></section>
+
+<section class="content-grid"><div class="box formbox"><div class="section-title"><div><p class="overline">METROBUS LIMA</p><h2 id="formTitle">Nuevo recarga</h2></div><span class="pill">Simulación</span></div><form id="recordForm"><div class="input-grid"><label class="panel-field"><span>N.º de tarjeta (10 dígitos)</span><input type="text" name="numero_tarjeta" id="input-numero_tarjeta" placeholder="0000000000" inputmode="numeric" maxlength="10" required></label>
+<label class="panel-field"><span>Recarga (S/ 2–2000)</span><input type="number" name="monto_recarga" id="input-monto_recarga" placeholder="12.50" min="0" step="any" required></label>
+<label class="panel-check"><input type="checkbox" name="tarjeta_nueva" id="input-tarjeta_nueva"><span>Solicitar tarjeta nueva (simulado)</span></label>
+<label class="panel-check"><input type="checkbox" name="pase_universitario" id="input-pase_universitario"><span>Aplicar tarifa universitaria (simulado)</span></label></div><div class="fare-box"><strong>Simulación de tarifa</strong><output id="fareEstimate">S/ 0.00</output><span>Este registro NO realiza recargas ni cobros reales.</span></div><div class="form-actions"><button id="createBtn" class="native-button primary" type="submit">Registrar recarga</button><button id="cancelEdit" class="native-button secondary" type="button" hidden>Cancelar edición</button></div></form></div>
+<div class="box rosterbox"><div class="section-title"><div><p class="overline">SUPERVISIÓN POR MÓDULO</p><h2>Equipo y operaciones</h2></div><span class="pill">🚌</span></div><p id="staffHint" class="panel-note">El administrador ve aquí a los empleados asignados al sistema.</p><div id="team" class="team"></div><p class="panel-note">Cada sistema tiene su propio panel. Todos los cambios quedan guardados en Portal360 y pueden revisarse desde el centro general.</p><a href="https://portal360-web.vercel.app/gestion/index.html" target="_blank" rel="noopener" class="native-button secondary general-link">Ir al panel general de Portal360 ↗</a></div></section>
+<section class="box records-box"><div class="section-title"><div><p class="overline">BANDEJA EN TIEMPO REAL</p><h2>Historial de recargas</h2></div><div class="filters"><label><span class="sr-only">Filtrar estados</span><select id="stateFilter"><option value="todos">Todos los estados</option><option value="registrado">Registrado</option><option value="en_revision">En revisión</option><option value="atendido">Atendido</option><option value="rechazado">Rechazado</option></select></label><label><span class="sr-only">Buscar</span><input id="search" type="search" placeholder="Buscar por código, persona, asunto..."></label><button id="exportCSV" class="native-button secondary" type="button">Exportar CSV</button></div></div><div class="table-scroll"><table id="records"><thead><tr><th scope="col">Código</th><th scope="col">Tarjeta</th><th scope="col">Monto</th><th scope="col">Tarjeta nueva</th><th scope="col">Pase universitario</th><th scope="col">Estado</th><th scope="col">Fecha</th><th scope="col">Acciones</th></tr></thead><tbody id="rows"><tr><td colspan="8">Inicia sesión para consultar registros.</td></tr></tbody></table></div><p id="empty" class="panel-note" hidden>No hay solicitudes con estos filtros.</p></section>
+<section class="box auditbox" id="auditBox" hidden><div class="section-title"><div><p class="overline">SOLO ADMINISTRADOR</p><h2>Actividad reciente de MetroBus Lima</h2></div></div><div class="table-scroll"><table><thead><tr><th>Fecha</th><th>Operación</th><th>Responsable</th><th>Registro</th></tr></thead><tbody id="auditRows"></tbody></table></div></section>
+</div>
+</main><footer class="native-footer"><span>MetroBus Lima · Panel independiente</span><span>↔ API central Render ↔ Neon PostgreSQL · Proyecto académico</span></footer>
+<script type="module" src="js/native-panel.js"></script>
+</body></html>

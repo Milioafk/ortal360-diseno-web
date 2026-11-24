@@ -57,7 +57,7 @@ function renderCases(){
   const actions=td(tr,'');
   if(profile?.usuario.rol==='administrador'||profile?.usuario.rol==='operador'){
     const sel=document.createElement('select');sel.setAttribute('aria-label','Cambiar estado de '+r.codigo);
-    for(const st of ['registrado','en_revision','atendido']){const opt=new Option(st.replaceAll('_',' '),st);sel.add(opt)}sel.value=r.estado;
+    for(const st of ['registrado','en_revision','atendido','rechazado']){const opt=new Option(st.replaceAll('_',' '),st);sel.add(opt)}sel.value=r.estado;
     const btn=node('button','Guardar','mini');btn.type='button';btn.addEventListener('click',async()=>{
      btn.disabled=true;try{await api('/gestion/solicitudes/'+r.id,'PATCH',{estado:sel.value});notice('Estado actualizado: '+r.codigo,true);await refresh()}catch(e){notice(e.message)}finally{btn.disabled=false}
     });actions.append(sel,document.createTextNode(' '),btn);
