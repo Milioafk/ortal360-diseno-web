@@ -14,13 +14,13 @@ function explicarError(error, accion) {
   }
   if (texto.includes('does not exist')) {
     const detalle = error && error.message ? error.message : error;
-    return `Faltan tablas o columnas en Neon. Ejecuta sql/semana7.sql y luego sql/semana9.sql completos en el SQL Editor. Detalle: ${detalle}`;
+    return `Este flujo legado aún no está migrado al Portal360. Usa «Panel de personal» o «Gestión conectada». Detalle: ${detalle}`;
   }
   if (texto.includes('password authentication') || texto.includes('authentication failed')) {
-    return 'Neon rechazó la contraseña de la cadena de conexión (js/config/neon-config.js).';
+    return 'El servidor rechazó el acceso. Comprueba el correo y la contraseña.';
   }
   if (texto.includes('failed to fetch') || texto.includes('import') || texto.includes('module') || texto.includes('network')) {
-    return `No se pudo conectar con Neon para ${accion}. Revisa tu internet y abre el sitio con Live Server (no con doble clic).`;
+    return `No se pudo conectar con la API segura de Render para ${accion}. Revisa tu internet y abre el sitio con Live Server (no con doble clic).`;
   }
   return `No se pudo ${accion}. Detalle: ${error && error.message ? error.message : error}`;
 }
@@ -43,17 +43,17 @@ function mostrarBienvenida(usuario) {
   const capa = document.getElementById('bienvenida');
   if (!capa) return;
 
-  const turno = usuario.rol === 'empleado' ? infoTurno(usuario.turno, usuario) : null;
+  const turno = ['empleado', 'operador'].includes(usuario.rol) && usuario.turno ? infoTurno(usuario.turno, usuario) : null;
   let icono = '🚌';
   let saludo = `Bienvenido, ${usuario.nombre}`;
   let detalle = 'Cliente · Preparando tus recargas';
 
-  if (usuario.rol === 'empleado' && turno) {
+  if (['empleado', 'operador'].includes(usuario.rol) && turno) {
     icono = turno.icono;
     saludo = `${turno.saludo}, ${usuario.nombre}`;
     detalle = `Empleado · Turno ${turno.nombre} (${turno.horario})`;
-  } else if (usuario.rol === 'empleado') {
-    detalle = 'Empleado · Sin turno asignado';
+  } else if (['empleado', 'operador'].includes(usuario.rol)) {
+    detalle = 'Empleado · Acceso por módulo (sin turno heredado)';
   } else if (usuario.rol === 'administrador') {
     icono = '🛠️';
     detalle = 'Administrador · Entrando al panel de gestión';

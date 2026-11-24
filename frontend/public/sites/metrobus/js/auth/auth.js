@@ -21,6 +21,7 @@ export async function iniciarSesion(correo, contrasena) {
 
 export function cerrarSesion() {
   sessionStorage.removeItem('usuario');
+  sessionStorage.removeItem('portal_session');
 }
 
 // Devuelve el usuario en sesión ({ id, nombre, rol, turno, hora_inicio, hora_fin }) o null si no hay sesión.
@@ -50,10 +51,11 @@ export function exigirRol(...rolesPermitidos) {
 // Página de inicio de cada rol (login.js y las páginas que redirigen la usan).
 export function rutaInicioSegunRol(rol) {
   const rutas = {
-    cliente: 'registro.html',
-    administrador: 'panel.html',
-    empleado: 'panel.html',
-    cajero: 'caja.html'
+    cliente: 'integracion.html',
+    administrador: 'gestion.html',
+    operador: 'gestion.html',
+    empleado: 'gestion.html',
+    cajero: 'gestion.html'  // solo panel de supervisión; caja no opera pagos reales
   };
   return rutas[rol] ?? 'index.html';
 }

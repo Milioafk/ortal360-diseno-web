@@ -12,7 +12,8 @@ export async function iniciarSesion(correo, contrasena) {
   sessionStorage.setItem('usuario', JSON.stringify(filas[0]));
   return filas[0];
 }
-export function cerrarSesion() { sessionStorage.removeItem('usuario'); }
+export function cerrarSesion() { sessionStorage.removeItem('usuario');
+  sessionStorage.removeItem('portal_session'); }
 export function exigirSesion() {
   const usuario = JSON.parse(sessionStorage.getItem('usuario') || 'null');
   if (!usuario) {
@@ -59,8 +60,8 @@ export function leerFormulario(f) {
 // Mensaje claro cuando falla la conexión con Neon
 export function mensajeError(err, porDefecto) {
   const m = err && err.message;
-  if (m === 'NEON_SIN_CONFIGURAR') return 'Falta pegar tu cadena de conexión en js/config/neon-config.js.';
-  if (m === 'NEON_NO_CARGA' || location.protocol === 'file:') return 'No se pudo cargar Neon. Abre el sitio con Live Server y revisa tu internet.';
+  if (m === 'NEON_SIN_CONFIGURAR') return 'La conexión debe configurarse en Render, nunca en el JavaScript público.';
+  if (m === 'NEON_NO_CARGA' || location.protocol === 'file:') return 'No se pudo contactar la API de Render; revisa la conexión a internet.';
   return porDefecto;
 }
 
@@ -82,10 +83,11 @@ export function exigirRol(...rolesPermitidos) {
 
 export function rutaInicioSegunRol(rol) {
   const rutas = {
-    cliente: 'registro.html',
-    administrador: 'panel.html',
-    empleado: 'panel.html',
-    cajero: 'caja.html'
+    cliente: 'integracion.html',
+    administrador: 'gestion.html',
+    operador: 'gestion.html',
+    empleado: 'gestion.html',
+    cajero: 'gestion.html'  // solo panel de supervisión; caja no opera pagos reales
   };
   return rutas[rol] ?? 'index.html';
 }

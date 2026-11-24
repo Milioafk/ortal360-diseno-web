@@ -1,73 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Panel · AguaViva Huancayo</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="css/panel.css">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=gestion.html">
+  <title>AguaViva Huancayo · Panel de gestión conectado</title>
+  <style>
+  body{min-height:100vh;margin:0;display:grid;place-items:center;background:#071422;color:#f4f8ff;font:16px system-ui,sans-serif}
+  main{max-width:560px;margin:24px;padding:30px;border:1px solid #415575;border-radius:18px;background:#075a76}
+  a{display:inline-block;background:#abffe5;color:#062a31;padding:12px 18px;border-radius:9px;text-decoration:none;font-weight:800}
+  small{color:#bcd2e4} h1{font-size:1.6rem}
+  </style>
+  <script>window.location.replace('gestion.html');</script>
 </head>
-
-<body>
-    <header>
-        <div class="marca"><svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 2C12 2 5 10 5 15a7 7 0 0 0 14 0c0-5-7-13-7-13z" fill="currentColor" />
-            </svg><span>AguaViva Huancayo</span></div>
-        <nav><a href="index.html">Inicio</a><a href="registro.html">Reportar fuga</a><a href="consulta.html">Mis
-                reportes</a><a href="panel.html" class="activo">Panel</a><a href="login.html" id="salir">Cerrar
-                sesión</a></nav>
-    </header>
-    <main>
-        <h1>Panel de gestión</h1>
-        <p id="rol"></p>
-        <form id="form-panel" class="caja" novalidate>
-            <h2 id="titulo-form">Nuevo reporte</h2>
-            <input id="id" type="hidden">
-            <div class="fila">
-                <div>
-                    <label for="nombre_vecino">Nombre del vecino</label><input id="nombre_vecino" type="text" required>
-                    <label for="direccion">Dirección</label><input id="direccion" type="text" required>
-                    <label for="imagen_url">Enlace de foto (opcional)</label><input id="imagen_url" type="url">
-                </div>
-                <div>
-                    <label for="descripcion">Descripción</label><textarea id="descripcion" required></textarea>
-                    <label for="estado">Estado</label><select id="estado">
-                        <option>registrado</option>
-                        <option>atendido</option>
-                        <option>rechazado</option>
-                    </select>
-                </div>
-            </div>
-            <button class="btn" type="submit" id="guardar">Crear reporte</button> <button class="btn" type="button"
-                id="cancelar" hidden>Cancelar edición</button>
-            <p id="exito" class="exito" role="status" hidden></p>
-            <p id="error" class="error" role="alert" hidden></p>
-        </form>
-        <section class="caja">
-            <h2>Todos los reportes</h2>
-            <div class="tabla">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Vecino</th>
-                            <th>Dirección</th>
-                            <th>Descripción</th>
-                            <th>Estado</th>
-                            <th>Pago</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="filas"></tbody>
-                </table>
-            </div>
-        </section>
-    </main>
-    <footer>AguaViva Huancayo · Diseño Web NRC 30239 · Jefferson Adauto Asmat</footer>
-    <script type="module" src="js/panel/panel.js"></script>
-</body>
-
-</html>
+<body><main><h1>💧 AguaViva Huancayo · Panel seguro</h1><p>El panel administrativo se ha integrado con Portal360. Los datos se consultan desde Render en la misma base Neon y los permisos se verifican en el servidor.</p><p><a href="gestion.html">Abrir panel de administrador / empleado</a></p><small>Turnos, caja y pagos heredados no se han migrado; no se realizan cobros reales.</small></main></body></html>

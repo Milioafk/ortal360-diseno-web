@@ -18,8 +18,9 @@ formLogin.addEventListener('submit', async (e) => {
     const usuario = await iniciarSesion(formLogin['l-correo'].value.trim(), formLogin['l-clave'].value);
     if (!usuario) return mostrarError('Correo o contraseña incorrectos.');
     const sig = new URLSearchParams(location.search).get('siguiente') || '';
-    const valida = /^(registro|consulta|panel|actualizar|pago|comprobante|caja)\.html(\?(id|op)=[\w-]+)?$/.test(sig);
-    window.location.href = valida ? sig : rutaInicioSegunRol(usuario.rol);
+    const valida = /^(registro|consulta|actualizar|comprobante)\.html(\?(id|op)=[\w-]+)?$/.test(sig);
+    const esPersonal = ['administrador', 'operador', 'empleado'].includes(usuario.rol);
+    window.location.href = esPersonal ? 'gestion.html' : (valida ? sig : rutaInicioSegunRol(usuario.rol));
   } catch (err) { mostrarError(mensajeError(err, 'No se pudo conectar con la base de datos.')); }
 });
 

@@ -26,6 +26,7 @@ export async function iniciarSesion(correo, contrasena) {
 
 export function cerrarSesion() {
   sessionStorage.removeItem('usuario');
+  sessionStorage.removeItem('portal_session');
   window.location.href = 'login.html';
 }
 
@@ -59,10 +60,11 @@ export function exigirRol(...rolesPermitidos) {
 
 export function rutaInicioSegunRol(rol) {
   const rutas = {
-    cliente: 'registro.html',
-    administrador: 'panel.html',
-    empleado: 'panel.html',
-    cajero: 'caja.html'
+    cliente: 'integracion.html',
+    administrador: 'gestion.html',
+    operador: 'gestion.html',
+    empleado: 'gestion.html',
+    cajero: 'gestion.html'  // solo panel de supervisión; caja no opera pagos reales
   };
   return rutas[rol] ?? 'index.html';
 }

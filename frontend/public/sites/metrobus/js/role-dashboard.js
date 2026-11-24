@@ -13,7 +13,7 @@ async function api(path,method='GET',body){
  if(!response.ok)throw Error(result.error||'Error HTTP '+response.status);
  return result;
 }
-function signOut(){session=null;profile=null;sessionStorage.removeItem('portal_session');$('workspace').hidden=true;$('loginSection').hidden=false;$('notice').hidden=true}
+function signOut(){session=null;profile=null;sessionStorage.removeItem('portal_session');sessionStorage.removeItem('usuario');$('moduleFilter').dataset.initialized='';$('workspace').hidden=true;$('loginSection').hidden=false;$('notice').hidden=true}
 $('logoutBtn').addEventListener('click',signOut);
 $('reloadBtn').addEventListener('click',()=>refresh().catch(e=>notice(e.message)));
 $('moduleFilter').addEventListener('change',()=>renderCases());
@@ -32,6 +32,18 @@ async function refresh(){
  $('roleBadge').textContent={administrador:'Administrador general',operador:'Empleado / operador',cliente:'Cliente'}[profile.usuario.rol]||profile.usuario.rol;
  $('scopeBadge').textContent=getScopeText();
  const role=profile.usuario.rol;
+ // Every original site has its own default scope; the API is always authoritative.
+ const localModule=document.body.dataset.module;
+ const selector=$('moduleFilter');
+ if(selector.dataset.initialized!=='yes'){
+   for(const option of selector.options){
+     option.disabled=role==='operador' && option.value!=='todos' && !(profile.modulos||[]).includes(option.value);
+   }
+   selector.value=localModule && localModule!=='todos' && !(role==='operador' && !(profile.modulos||[]).includes(localModule))
+     ?localModule
+     :(role==='operador' && profile.modulos?.length ? profile.modulos[0] : 'todos');
+   selector.dataset.initialized='yes';
+ }
  $('adminSection').hidden=role!=='administrador';$('auditSection').hidden=role!=='administrador';
  $('caseHint').textContent=role==='administrador'?'Puedes atender cualquier módulo. Los cambios quedan registrados en auditoría.':role==='operador'?'Puedes atender solicitudes únicamente de tus módulos asignados.':'Puedes consultar tus solicitudes, pero no modificar su estado.';
  const [summary,cases]=await Promise.all([api('/gestion/resumen'),api('/gestion/solicitudes')]);

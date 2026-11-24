@@ -1,66 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Gestión - Reclamos Tributarios</title>
-    <link rel="stylesheet" href="css/panel.css">
-    <style>
-        .panel-container { max-width: 1200px; margin: 30px auto; padding: 20px; }
-        .header-panel { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .tabla-reclamos { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; }
-        .tabla-reclamos th, .tabla-reclamos td { padding: 12px; border: 1px solid #ddd; text-align: left; }
-        .tabla-reclamos th { background-color: #003366; color: white; }
-        .badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em; }
-        .badge-registrado { background-color: #ffeeba; color: #856404; }
-        .badge-atendido { background-color: #d4edda; color: #155724; }
-        .badge-rechazado { background-color: #f8d7da; color: #721c24; }
-        /* Badges de Estado de Pago */
-        .badge-pago { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em; display: inline-block; }
-        .badge-pendiente { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
-        .badge-pagado { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .btn-accion { padding: 6px 10px; margin-right: 5px; cursor: pointer; border: none; border-radius: 3px; }
-        .btn-editar { background-color: #ffc107; color: #000; }
-        .btn-eliminar { background-color: #dc3545; color: #fff; }
-        .btn-logout { background-color: #6c757d; color: white; padding: 8px 15px; border-radius: 4px; cursor: pointer; border: none; }
-    </style>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=gestion.html">
+  <title>SAT Lima · Panel de gestión conectado</title>
+  <style>
+  body{min-height:100vh;margin:0;display:grid;place-items:center;background:#071422;color:#f4f8ff;font:16px system-ui,sans-serif}
+  main{max-width:560px;margin:24px;padding:30px;border:1px solid #415575;border-radius:18px;background:#00366b}
+  a{display:inline-block;background:#abffe5;color:#062a31;padding:12px 18px;border-radius:9px;text-decoration:none;font-weight:800}
+  small{color:#bcd2e4} h1{font-size:1.6rem}
+  </style>
+  <script>window.location.replace('gestion.html');</script>
 </head>
-<body>
-
-    <div class="panel-container">
-        <div class="header-panel">
-            <h2>Panel de Administración de Reclamos</h2>
-            <div>
-                <span id="info-usuario">Cargando usuario...</span> | 
-                <button id="btn-cerrar-sesion" class="btn-logout">Cerrar Sesión</button>
-            </div>
-        </div>
-
-        <h3>Listado General de Reclamos</h3>
-
-        <table class="tabla-reclamos">
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Propietario</th>
-                    <th>DNI</th>
-                    <th>Tipo Impuesto</th>
-                    <th>Motivo</th>
-                    <th>Estado Trámite</th>
-                    <th>Estado Pago</th>
-                    <th>Comprobante</th>
-                    <th>Fecha</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="tabla-cuerpo">
-                <tr>
-                    <td colspan="10" style="text-align: center;">Cargando registros de la base de datos...</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <script type="module" src="js/panel-vista.js"></script>
-</body>
-</html>
+<body><main><h1>🏛️ SAT Lima · Panel seguro</h1><p>El panel administrativo se ha integrado con Portal360. Los datos se consultan desde Render en la misma base Neon y los permisos se verifican en el servidor.</p><p><a href="gestion.html">Abrir panel de administrador / empleado</a></p><small>Turnos, caja y pagos heredados no se han migrado; no se realizan cobros reales.</small></main></body></html>

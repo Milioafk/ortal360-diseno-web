@@ -39,16 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (usuario) {
                 mostrarMensaje(`¡Bienvenido ${usuario.nombre}! Cargando...`, 'exito');
 
-                // Redirección adaptada a roles de Neon SQL
+                // La API asigna los roles; nunca se eligen durante el registro público.
                 setTimeout(() => {
-    if (usuario.rol === 'cajero') {
-        window.location.href = 'panelcajero.html';
-    } else if (usuario.rol === 'admin' || usuario.rol === 'empleado') {
-        window.location.href = 'panel.html';
-    } else {
-        window.location.href = 'index.html';
-    }
-}, 1000);
+                    window.location.href = ['administrador', 'operador', 'empleado'].includes(usuario.rol)
+                        ? 'gestion.html' : 'integracion.html';
+                }, 600);
             } else {
                 mostrarMensaje('Correo o contraseña incorrectos', 'error');
             }
@@ -64,11 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const correo = document.getElementById('reg-correo').value.trim();
             const contrasena = document.getElementById('reg-password').value.trim();
             
-            // Capturamos el rol seleccionado en el formulario
-            const rol = document.getElementById('reg-rol').value;
-
-            // Enviamos el rol seleccionado como 4to parámetro
-            const res = await registrarUsuario(nombre, correo, contrasena, rol);
+            // El registro público siempre es de cliente: evita la autoasignación de privilegios.
+            const res = await registrarUsuario(nombre, correo, contrasena);
 
             if (res.ok) {
                 mostrarMensaje('Cuenta creada con éxito. Ya puedes iniciar sesión.', 'exito');

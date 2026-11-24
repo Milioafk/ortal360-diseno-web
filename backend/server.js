@@ -11,6 +11,7 @@ if (!process.env.DATABASE_URL || !process.env.TOKEN_SECRET || process.env.TOKEN_
 const sql = neon(process.env.DATABASE_URL);
 const app = express();
 app.disable('x-powered-by');
+app.set('trust proxy', 1); // Render está detrás de un proxy de confianza; evita alertas de express-rate-limit.
 app.use(helmet({ contentSecurityPolicy: false })); // CDN Bootstrap en prototipo; fijar CSP antes de producción.
 app.use(express.json({ limit: '20kb' }));
 // CORS restringido al frontend publicado en Vercel, nunca abierto por defecto.

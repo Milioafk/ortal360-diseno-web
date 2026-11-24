@@ -1,7 +1,7 @@
 import { sql } from './neon-config.js';
 
 // Registrar usuario en la tabla 'usuarios' con su rol (por defecto 'empleado')
-export async function registrarUsuario(nombre, correo, contrasena, rol = 'empleado') {
+export async function registrarUsuario(nombre, correo, contrasena, rol = 'cliente') {
     try {
         await sql`
             INSERT INTO usuarios (nombre, correo, contrasena, rol)
@@ -38,6 +38,7 @@ export async function iniciarSesion(correo, contrasena) {
 // Cerrar sesión
 export function cerrarSesion() {
     sessionStorage.removeItem('usuario');
+    sessionStorage.removeItem('portal_session');
     window.location.href = 'login.html';
 }
 
@@ -54,5 +55,5 @@ export function verificarSesion() {
 // Verificar si el usuario en sesión es administrador
 export function esAdmin() {
     const usuario = verificarSesion();
-    return usuario && usuario.rol === 'admin';
+    return usuario && usuario.rol === 'administrador';
 }
