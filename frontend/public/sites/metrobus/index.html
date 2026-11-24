@@ -1,144 +1,143 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="MetroBus Lima - Transporte urbano masivo de la ciudad de Lima">
-  <title>MetroBus Lima - Inicio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/index.css">
-</head>
-<body><aside id="portal360-conexion" style="position:relative;z-index:9999;background:linear-gradient(110deg,#07162e,#1544a6);color:white;padding:14px 22px;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap"><strong>◈ Portal360 · Este sitio está unido a Neon</strong><span>Registra y consulta datos con la API central segura.</span><a href="integracion.html" style="background:#6dffcf;color:#08213b;padding:10px 19px;border-radius:9px;text-decoration:none;font-weight:800">Abrir gestión conectada →</a><a href="panel.html" style="background:#ffffff;color:#0a2540;padding:10px 16px;border-radius:9px;text-decoration:none;font-weight:800">Panel de administrador / empleado</a></aside>
-
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="marca" href="index.html">
-        <span class="marca-punto" aria-hidden="true"></span>
-        <span class="marca-texto">Metro<em>Bus</em> Lima</span>
-      </a>
-      <nav aria-label="Navegación principal">
-        <ul>
-          <li><a href="index.html" aria-current="page">Inicio</a></li>
-          <li><a href="servicios.html">Servicios</a></li>
-          <li><a href="rutas.html">Rutas</a></li>
-          <li><a href="como-funciona.html">Cómo funciona</a></li>
-          <li><a href="registro.html">Recargar tarjeta</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
-          <li id="nav-sesion"><a href="login.html">Iniciar sesión</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="hero-grid">
-        <div class="hero-texto">
-          <h1>Tu próximo bus, a tiempo</h1>
-          <p class="hero-intro">Rutas troncales, tarjeta recargable y estaciones cerca de ti, en un solo lugar.</p>
-          <div class="hero-acciones">
-            <a href="rutas.html" class="btn btn-primario">Ver rutas y estaciones</a>
-            <a href="contacto.html" class="btn btn-secundario">Reportar un problema</a>
-          </div>
-        </div>
-
-        <figure class="banner-figura">
-          <div class="banner-marco">
-            <picture>
-              <source media="(max-width: 600px)" srcset="img/metro-lima-callao-320.png">
-              <img src="img/metro-lima-callao.png" alt="Logotipo del Metro de Lima y Callao con una M blanca sobre un círculo azul" width="554" height="554">
-            </picture>
-          </div>
-          <figcaption>Metro de Lima y Callao: la red que mueve a la ciudad</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <div class="cifras">
-      <div>
-        <span class="cifra-numero">3 min</span>
-        <span class="cifra-etiqueta">Frecuencia en hora punta</span>
-      </div>
-      <div>
-        <span class="cifra-numero">S/ 2.50</span>
-        <span class="cifra-etiqueta">Pasaje adulto</span>
-      </div>
-      <div>
-        <span class="cifra-numero">05:00–23:00</span>
-        <span class="cifra-etiqueta">Horario de servicio</span>
-      </div>
-    </div>
-
-    <section id="inicio">
-      <h2>Bienvenido a MetroBus Lima</h2>
-      <p>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="MetroBus Lima - Transporte urbano masivo de la ciudad de Lima" name="description"/>
+<title>MetroBus Lima - Inicio</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Work+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="css/index.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="css/p360-story.css" rel="stylesheet"/></head>
+<body data-p360-cinematic="metrobus"><aside class="p360-story-bridge" id="portal360-conexion" style="position:relative;z-index:9999;background:linear-gradient(110deg,#07162e,#1544a6);color:white;padding:14px 22px;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap"><strong>◈ Portal360 · Este sitio está unido a Neon</strong><span>Registra y consulta datos con la API central segura.</span><a href="integracion.html" style="background:#6dffcf;color:#08213b;padding:10px 19px;border-radius:9px;text-decoration:none;font-weight:800">Abrir gestión conectada →</a><a href="panel.html" style="background:#ffffff;color:#0a2540;padding:10px 16px;border-radius:9px;text-decoration:none;font-weight:800">Panel de administrador / empleado</a></aside>
+<header class="site-header">
+<div class="header-inner">
+<a class="marca" href="index.html">
+<span aria-hidden="true" class="marca-punto"></span>
+<span class="marca-texto">Metro<em>Bus</em> Lima</span>
+</a>
+<nav aria-label="Navegación principal">
+<ul>
+<li><a aria-current="page" href="index.html">Inicio</a></li>
+<li><a href="servicios.html">Servicios</a></li>
+<li><a href="rutas.html">Rutas</a></li>
+<li><a href="como-funciona.html">Cómo funciona</a></li>
+<li><a href="registro.html">Recargar tarjeta</a></li>
+<li><a href="contacto.html">Contacto</a></li>
+<li id="nav-sesion"><a href="login.html">Iniciar sesión</a></li>
+</ul>
+</nav>
+</div>
+</header><section aria-label="Historia visual de MetroBus Lima" class="p360-film">
+<div class="p360-film-inner"><div class="p360-film-copy"><span class="p360-film-index">◈ PORTAL360 NETWORK <i></i> CIUDAD / MOVILIDAD</span>
+<h2>Una ruta más clara para cada usuario del transporte.</h2><p>Las recargas y las solicitudes se registran en un flujo único para que cada recorrido tenga trazabilidad.</p>
+<div class="p360-film-actions"><a class="p360-film-action" href="registro.html">Comenzar la experiencia <span>↗</span></a><a class="p360-film-secondary" href="panel.html">Panel propio del sistema ↗</a></div>
+<small class="p360-film-steps">TARJETA → CONSULTA → HISTORIAL</small></div>
+<div aria-hidden="true" class="p360-film-art"><svg fill="none" viewbox="0 0 410 290" xmlns="http://www.w3.org/2000/svg"><path d="M36 244C86 210 93 90 184 95S276 183 370 40" stroke="#ffad70" stroke-dasharray="2 20" stroke-linecap="round" stroke-width="8"></path><circle cx="86" cy="175" fill="#fa914c" r="19"></circle><circle cx="86" cy="175" fill="#18304e" r="9"></circle><circle cx="338" cy="85" fill="#fa914c" r="19"></circle><circle cx="338" cy="85" fill="#18304e" r="9"></circle><rect fill="#1a436b" height="125" rx="23" stroke="#80d3ff" stroke-opacity=".65" width="174" x="130" y="107"></rect><rect fill="#3878aa" height="57" rx="11" width="130" x="152" y="126"></rect><path d="M175 126v57M218 126v57M261 126v57" stroke="#122f50" stroke-width="4"></path><circle cx="168" cy="218" fill="#101d30" r="13" stroke="#fbc49c" stroke-width="6"></circle><circle cx="269" cy="218" fill="#101d30" r="13" stroke="#fbc49c" stroke-width="6"></circle></svg></div></div></section>
+<main>
+<section class="hero">
+<div class="hero-grid">
+<div class="hero-texto">
+<h1>Tu próximo bus, a tiempo</h1>
+<p class="hero-intro">Rutas troncales, tarjeta recargable y estaciones cerca de ti, en un solo lugar.</p>
+<div class="hero-acciones">
+<a class="btn btn-primario" href="rutas.html">Ver rutas y estaciones</a>
+<a class="btn btn-secundario" href="contacto.html">Reportar un problema</a>
+</div>
+</div>
+<figure class="banner-figura">
+<div class="banner-marco">
+<picture>
+<source media="(max-width: 600px)" srcset="img/metro-lima-callao-320.png"/>
+<img alt="Logotipo del Metro de Lima y Callao con una M blanca sobre un círculo azul" height="554" src="img/metro-lima-callao.png" width="554"/>
+</picture>
+</div>
+<figcaption>Metro de Lima y Callao: la red que mueve a la ciudad</figcaption>
+</figure>
+</div>
+</section>
+<div class="cifras">
+<div>
+<span class="cifra-numero">3 min</span>
+<span class="cifra-etiqueta">Frecuencia en hora punta</span>
+</div>
+<div>
+<span class="cifra-numero">S/ 2.50</span>
+<span class="cifra-etiqueta">Pasaje adulto</span>
+</div>
+<div>
+<span class="cifra-numero">05:00–23:00</span>
+<span class="cifra-etiqueta">Horario de servicio</span>
+</div>
+</div>
+<section id="inicio">
+<h2>Bienvenido a MetroBus Lima</h2>
+<p>
         MetroBus Lima es el sistema de transporte urbano masivo que conecta los principales
         distritos de la ciudad mediante rutas troncales y alimentadoras. Cada día miles de
         pasajeros usan nuestras rutas para llegar a su trabajo, centro de estudios o a casa
         de manera rápida y segura.
       </p>
-      <p>Conoce nuestros <a href="servicios.html">servicios</a>, revisa las <a href="rutas.html">rutas y tarifas</a>
+<p>Conoce nuestros <a href="servicios.html">servicios</a>, revisa las <a href="rutas.html">rutas y tarifas</a>
       o aprende <a href="como-funciona.html">cómo funciona</a> el sistema.</p>
-    </section>
-
-    <section class="accesos" aria-labelledby="titulo-accesos">
-      <h2 id="titulo-accesos">¿Qué quieres hacer hoy?</h2>
-      <ul class="accesos-lista">
-        <li>
-          <a class="acceso-tarjeta" href="rutas.html">
-            <img src="img/icono-mapa.svg" alt="" width="64" height="64">
-            <span class="acceso-titulo">Planear mi viaje</span>
-            <span class="acceso-texto">Consulta las líneas, estaciones y tarifas.</span>
-          </a>
-        </li>
-        <li>
-          <a class="acceso-tarjeta" href="registro.html">
-            <img src="img/icono-tarjeta.svg" alt="" width="64" height="64">
-            <span class="acceso-titulo">Recargar mi tarjeta</span>
-            <span class="acceso-texto">Agrega saldo en pocos pasos y obtén tu código.</span>
-          </a>
-        </li>
-        <li>
-          <a class="acceso-tarjeta" href="como-funciona.html">
-            <img src="img/icono-rutas.svg" alt="" width="64" height="64">
-            <span class="acceso-titulo">Cómo funciona</span>
-            <span class="acceso-texto">Aprende a usar el sistema desde tu primer viaje.</span>
-          </a>
-        </li>
-      </ul>
-    </section>
-  </main>
-
-  <footer class="pie-mapa">
-    <div class="pie-columnas">
-      <div class="pie-col">
-        <p class="pie-marca">Metro<span>Bus</span> Lima</p>
-        <p>Transporte urbano masivo para Lima: puntual, seguro y siempre a tiempo para tu día.</p>
-      </div>
-      <div class="pie-col">
-        <h4>Mapa del sitio</h4>
-        <a href="index.html">Inicio</a>
-        <a href="servicios.html">Servicios</a>
-        <a href="rutas.html">Rutas</a>
-        <a href="como-funciona.html">Cómo funciona</a>
-        <a href="registro.html">Recargar tarjeta</a>
-        <a href="contacto.html">Contacto</a>
-      </div>
-      <div class="pie-col">
-        <h4>Líneas</h4>
-        <a href="rutas.html">Línea A · Naranja</a>
-        <a href="rutas.html">Línea B · Verde</a>
-        <a href="rutas.html">Línea C · Alimentadora</a>
-      </div>
-      <div class="pie-col">
-        <h4>Atención al cliente</h4>
-        <p>Lima, Perú</p>
-        <p>Proyecto educativo del curso de Diseño Web</p>
-      </div>
-    </div>
-    <p class="pie-copy">MetroBus Lima &copy; 2026 — Proyecto educativo del curso de Diseño Web.</p>
-  </footer>
-  <script type="module" src="js/auth/sesion-menu.js"></script>
-</body>
+</section>
+<section aria-labelledby="titulo-accesos" class="accesos">
+<h2 id="titulo-accesos">¿Qué quieres hacer hoy?</h2>
+<ul class="accesos-lista">
+<li>
+<a class="acceso-tarjeta" href="rutas.html">
+<img alt="" height="64" src="img/icono-mapa.svg" width="64"/>
+<span class="acceso-titulo">Planear mi viaje</span>
+<span class="acceso-texto">Consulta las líneas, estaciones y tarifas.</span>
+</a>
+</li>
+<li>
+<a class="acceso-tarjeta" href="registro.html">
+<img alt="" height="64" src="img/icono-tarjeta.svg" width="64"/>
+<span class="acceso-titulo">Recargar mi tarjeta</span>
+<span class="acceso-texto">Agrega saldo en pocos pasos y obtén tu código.</span>
+</a>
+</li>
+<li>
+<a class="acceso-tarjeta" href="como-funciona.html">
+<img alt="" height="64" src="img/icono-rutas.svg" width="64"/>
+<span class="acceso-titulo">Cómo funciona</span>
+<span class="acceso-texto">Aprende a usar el sistema desde tu primer viaje.</span>
+</a>
+</li>
+</ul>
+</section>
+</main>
+<footer class="pie-mapa">
+<div class="pie-columnas">
+<div class="pie-col">
+<p class="pie-marca">Metro<span>Bus</span> Lima</p>
+<p>Transporte urbano masivo para Lima: puntual, seguro y siempre a tiempo para tu día.</p>
+</div>
+<div class="pie-col">
+<h4>Mapa del sitio</h4>
+<a href="index.html">Inicio</a>
+<a href="servicios.html">Servicios</a>
+<a href="rutas.html">Rutas</a>
+<a href="como-funciona.html">Cómo funciona</a>
+<a href="registro.html">Recargar tarjeta</a>
+<a href="contacto.html">Contacto</a>
+</div>
+<div class="pie-col">
+<h4>Líneas</h4>
+<a href="rutas.html">Línea A · Naranja</a>
+<a href="rutas.html">Línea B · Verde</a>
+<a href="rutas.html">Línea C · Alimentadora</a>
+</div>
+<div class="pie-col">
+<h4>Atención al cliente</h4>
+<p>Lima, Perú</p>
+<p>Proyecto educativo del curso de Diseño Web</p>
+</div>
+</div>
+<p class="pie-copy">MetroBus Lima © 2026 — Proyecto educativo del curso de Diseño Web.</p>
+</footer>
+<script src="js/auth/sesion-menu.js" type="module"></script>
+<script defer="True" src="js/p360-story.js"></script></body>
 </html>
