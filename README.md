@@ -35,3 +35,7 @@ El login nuevo cifra contraseñas mediante scrypt; no migra usuarios con contras
 - Capturar los mockups originales y comprobar visualmente qué partes se han incorporado.
 
 **Importante:** Las cadenas de conexión estaban incrustadas en algunos ZIP originales, por lo que conviene rotar dichas credenciales en Neon antes de desplegar las versiones públicas. No ejecutar scripts SQL antiguos que incluyen `TRUNCATE` sobre la base unificada.
+
+
+## Simulación de usuarios y roles
+Se incorporó un panel por rol y 50 cuentas ficticias en Neon. Consulta `GUIA_ROLES_DEMO.md`. Las credenciales se entregan en un Excel privado **fuera del repositorio**.

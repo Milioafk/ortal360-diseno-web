@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portal360 · Centro de operaciones por rol</title>
+<meta name="description" content="Panel demostrativo de administradores, empleados y clientes con Neon PostgreSQL">
+<link rel="stylesheet" href="css/role-dashboard.css">
+</head>
+<body data-module="crm">
+<header class="nav"><a class="brand" href="/">◈ PORTAL<span>360</span></a><div class="nav-right"><span class="tag">ENTORNO DE DEMOSTRACIÓN</span><a class="nav-link" href="index.html">Volver al sitio</a></div></header>
+<main class="container">
+<div class="intro"><div><p class="eyebrow">CONTROL DE ACCESOS · NEON + RENDER</p><h1>Centro de <em>operaciones</em></h1><p>La interfaz cambia según los permisos de la cuenta. Las acciones se verifican de nuevo en el servidor antes de modificar la base de datos.</p></div><aside class="server"><span class="dot"></span>API central · PostgreSQL compartido</aside></div>
+<div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+<section id="loginSection" class="auth"><div class="panel"><h2>Acceder al panel</h2><p>Usa una cuenta ficticia del Excel privado para demostrar cada rol. También admite las cuentas existentes de Portal360.</p><form id="loginForm"><label>Correo electrónico<input name="correo" type="email" required autocomplete="username" placeholder="admin01@portal360.example"></label><label>Contraseña<input name="contrasena" type="password" required autocomplete="current-password" placeholder="Contraseña de la hoja Cuentas"></label><button class="primary" type="submit">Iniciar sesión</button></form></div><div class="help panel"><div class="helpIcon">🔐</div><h3>Accesos diferenciados</h3><p><b>Administrador:</b> usuarios demo, módulos y auditoría.</p><p><b>Empleado:</b> solo casos de su área y cambio de estado.</p><p><b>Cliente:</b> únicamente sus registros.</p><small>Ningún rol se decide en el navegador; la API lee el rol actual desde Neon.</small></div></section>
+<section id="workspace" hidden>
+<div class="session"><div><span class="muted small">SESIÓN ACTIVA</span><h2 id="welcome">Usuario</h2><div class="pills"><span id="roleBadge" class="role">Rol</span><span id="scopeBadge" class="scope">Alcance</span></div></div><div class="session-controls"><button type="button" id="reloadBtn" class="ghost">↻ Actualizar</button><button type="button" id="logoutBtn" class="danger">Cerrar sesión</button></div></div>
+<div id="kpis" class="kpis" aria-label="Indicadores"></div>
+<section class="panel space"><div class="section-header"><div><p class="eyebrow">BANDEJA DE ATENCIÓN</p><h2>Solicitudes por módulo</h2></div><div class="filters"><label for="moduleFilter">Módulo</label><select id="moduleFilter"><option value="todos">Todos los permitidos</option><option value="sat">SAT Lima</option><option value="metrobus">MetroBus</option><option value="crm">CRM Andino</option><option value="agua">AguaViva</option></select></div></div><p id="caseHint" class="muted">Los empleados pueden tramitar únicamente solicitudes de sus módulos asignados.</p><div class="scroll"><table class="data" id="casesTable"><thead><tr><th>Código</th><th>Módulo</th><th>Solicitante</th><th>Detalle</th><th>Estado</th><th>Gestión</th></tr></thead><tbody id="casesBody"></tbody></table></div><p id="casesEmpty" class="muted" hidden>Sin resultados.</p></section>
+<section id="adminSection" class="panel space" hidden><div class="section-header"><div><p class="eyebrow">ADMINISTRADOR ÚNICAMENTE</p><h2>Gestión de usuarios demo</h2></div><span class="scope">50 cuentas ficticias</span></div><p class="muted">Puedes activar o suspender cuentas demo y cambiar sus roles y módulos. Se registra quién realizó cada cambio. No se muestran ni editan cuentas personales reales.</p><div class="scroll"><table class="data"><thead><tr><th>Cuenta</th><th>Rol</th><th>Módulos empleado</th><th>Activa</th><th>Acción</th></tr></thead><tbody id="usersBody"></tbody></table></div></section>
+<section id="auditSection" class="panel space" hidden><div class="section-header"><div><p class="eyebrow">TRAZABILIDAD</p><h2>Bitácora de acciones</h2></div></div><div class="scroll"><table class="data"><thead><tr><th>Fecha</th><th>Actor</th><th>Acción</th><th>Módulo</th><th>ID</th></tr></thead><tbody id="auditBody"></tbody></table></div></section>
+</section>
+<footer><span>Portal360 · Simulación académica 2026</span><span>Los pagos no se realizan. Contraseñas ficticias en el Excel privado.</span></footer>
+</main><script type="module" src="js/role-dashboard.js"></script>
+</body></html>

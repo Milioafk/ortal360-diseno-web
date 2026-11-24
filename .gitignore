@@ -4,3 +4,8 @@
 **/.env.local
 **/.env.*.local
 .DS_Store
+
+# Credenciales y archivos privados de demostración
+*PRIVADO*.xlsx
+*PASSWORD*.xlsx
+Portal360_50_Cuentas_Demo_PRIVADO.xlsx
