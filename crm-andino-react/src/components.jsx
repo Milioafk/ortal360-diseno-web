@@ -1,0 +1,18 @@
+import React,{useState} from 'react';
+export const initial={nombre:'',empresa:'',correo_contacto:'',num_usuarios:'1-3',usuarios_crm:'',meses:'',modulo_facturacion:false,mensaje:''};
+export const states=['registrado','en_revision','atendido','rechazado'];
+export const labels={registrado:'Registrado',en_revision:'En revisión',atendido:'Atendido',rechazado:'Rechazado'};
+export function Metric({title,value}) {return <article className="metric"><span>{title}</span><strong>{value}</strong></article>}
+export function Login({onSubmit,busy}) {
+  const [register,setRegister]=useState(false);
+  return <section className="card auth"><h2>{register?'Crear cuenta de cliente':'Inicia sesión'}</h2><p>Identidad compartida con Portal360.</p><form onSubmit={e=>{e.preventDefault();onSubmit(Object.fromEntries(new FormData(e.currentTarget)),register)}}>{register&&<label>Nombre<input name="nombre" required autoComplete="name"/></label>}<label>Correo<input name="correo" type="email" required autoComplete="username"/></label><label>Contraseña<input name="contrasena" type="password" required autoComplete={register?'new-password':'current-password'}/></label><button disabled={busy}>{register?'Registrar cuenta':'Entrar al panel'}</button></form><button className="secondary" onClick={()=>setRegister(v=>!v)}>{register?'Ya tengo cuenta':'Crear cuenta'}</button></section>
+}
+export function RequestForm({value,setValue,editing,onSave,onCancel,busy}) {
+  const set=(k,v)=>setValue(old=>({...old,[k]:v}));
+  const input=(k,label,type='text',required=false)=><label>{label}<input type={type} required={required} min={type==='number'?0:undefined} value={value[k]??''} onChange={e=>set(k,e.target.value)}/></label>;
+  return <section className="card" id="request"><h2>{editing?'Editar '+editing.codigo:'Nueva solicitud CRM'}</h2><form onSubmit={e=>{e.preventDefault();onSave()}}><div className="formgrid">{input('nombre','Contacto','text',true)}{input('empresa','Empresa','text',true)}{input('correo_contacto','Correo de contacto','email',true)}<label>Usuarios aproximados<select value={value.num_usuarios} onChange={e=>set('num_usuarios',e.target.value)}>{['1-3','4-10','11+'].map(x=><option key={x}>{x}</option>)}</select></label>{input('usuarios_crm','Licencias','number')}{input('meses','Meses de servicio','number')}<label className="check"><input type="checkbox" checked={!!value.modulo_facturacion} onChange={e=>set('modulo_facturacion',e.target.checked)}/>Facturación (simulada)</label></div><label>Mensaje<textarea required rows="3" value={value.mensaje} onChange={e=>set('mensaje',e.target.value)}/></label><button disabled={busy}>{editing?'Guardar cambios':'Registrar solicitud'}</button>{editing&&<button type="button" className="secondary" onClick={onCancel}>Cancelar</button>}</form></section>
+}
+export function RecordRow({item,staff,onEdit,onStatus,busy}) {
+  const [status,setStatus]=useState(item.estado);
+  return <tr><td>{item.codigo}</td><td>{item.datos?.nombre}</td><td>{item.datos?.empresa}</td><td>{item.datos?.correo_contacto}</td><td><span className="tag">{labels[item.estado]||item.estado}</span></td><td>{item.creado_en?new Date(item.creado_en).toLocaleString('es-PE',{timeZone:'America/Lima'}):'—'}</td><td>{staff?<><button className="secondary small" onClick={()=>onEdit(item)}>Editar</button><select aria-label={'Estado '+item.codigo} value={status} onChange={e=>setStatus(e.target.value)}>{states.map(s=><option value={s} key={s}>{labels[s]}</option>)}</select><button className="small" disabled={busy} onClick={()=>onStatus(item,status)}>Guardar</button></>:'Solo lectura'}</td></tr>
+}
